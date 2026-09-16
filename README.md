@@ -23,10 +23,9 @@
 ---
 
 ## 2. Processos de Negócio
-*(vale 10% — Dimensão Procedimental)*
 
-- **Principais processos mapeados:** *ex.: cadastro de clientes/beneficiários/fiéis, controle de estoque ou doações, vendas ou arrecadação, emissão de pedidos ou solicitações, entregas ou distribuição, organização de eventos/rituais/mutirões.*
-- **Fluxogramas:** (Opcional) *represente visualmente pelo menos os processos-chave (imagens anexadas). Deve ficar claro o fluxo de cada processo e como eles se integram entre si.*
+- **Principais processos mapeados:**
+- [Fluxograma do Banco de Dados (Básico)](docs/fluxograma-basico-projetosantoluppo.png)
 
 ---
 
