@@ -25,6 +25,16 @@
 ## 2. Processos de Negócio
 
 - **Principais processos mapeados:**
+*Gestão de Pedidos (Venda): O fluxo central inicia quando o cliente faz contato via WhatsApp, telefone ou balcão. O atendente identifica o cliente (ou realiza um novo cadastro), anota os itens do pedido com suas especificações (ex: metades, remoção de ingredientes, bordas) e confirma o endereço e a forma de entrega.*
+
+*Produção (Cozinha): A comanda gerada pelo pedido é enviada à área de preparo. A equipe da cozinha utiliza os insumos disponíveis no estoque diário para montar e assar as pizzas conforme as especificações exigidas na venda.*
+
+*Logística de Entrega e Retirada: Com o produto finalizado, o pedido é encaminhado para a expedição. Se for delivery, é alocado para a rota de um motoboy; se for retirada, é entregue diretamente ao cliente no balcão.*
+
+*Fechamento e Pagamento: O pagamento é processado e vinculado ao pedido, seja no balcão (cartão/dinheiro), via motoboy (maquininha na entrega) ou remotamente (PIX), finalizando o ciclo de atendimento ao cliente.*
+
+*Controle de Estoque e Compras (Processo Paralelo): Independentemente das vendas do momento, o volume de ingredientes é monitorado. Quando um insumo atinge o estoque mínimo de segurança, a gestão aciona o processo de compras junto aos fornecedores para reabastecer a pizzaria antes do próximo turno de pico.*
+
 - [Fluxograma do Banco de Dados (Básico)](docs/fluxograma-basico-projetosantoluppo.png)
 
 ---
