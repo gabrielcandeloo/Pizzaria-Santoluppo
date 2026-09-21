@@ -17,7 +17,7 @@
 - Pablo Lorran Ferreira da Silva - 48146978
 - Davi Ramos de Oliveira - 049576216 
 - John Antoni Rodrigo Quispe - 49450492
-- 
+- Leon Correia da Silva - 48036374
 ## 1. Caracterização da Organização
 
 - **Pizzaria Santoluppo:**
