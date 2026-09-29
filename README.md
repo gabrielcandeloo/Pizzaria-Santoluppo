@@ -145,7 +145,7 @@ Diagrama anexado: [Diagrama Entidade-Relacionamento](docs/DER-PIZZARIA.pdf)
 
 ## 9. Uso de Inteligência Artificial
 
-| Uso 1 |
+### | Uso 1 |
 |------|------------------|
 | **Ferramenta e etapa**
 *Gemini: Utilizado na etapa de Modelagem Conceitual (Seções 6, 7 e 8) para revisão do Diagrama Entidade-Relacionamento desenhado no software brModelo.* |
@@ -166,7 +166,7 @@ Diagrama anexado: [Diagrama Entidade-Relacionamento](docs/DER-PIZZARIA.pdf)
 
 ---
 
-| Uso 2 - Estruturação dos Requisitos, Regras de Negócio e Descrição do Repositório |
+### | Uso 2 - Estruturação dos Requisitos, Regras de Negócio e Descrição do Repositório |
 |------|------------------|
 | **Ferramenta e etapa** 
 *Gemini: Utilizado nas etapas de planejamento de levantamento de dados, redação e aperfeiçoamento dos Processos de Negócio, Requisitos e Regras (Seções 2, 3 e 4) e elaboração da Introdução do GitHub.* |
