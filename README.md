@@ -147,22 +147,40 @@ Diagrama anexado: [Diagrama Entidade-Relacionamento](docs/DER-PIZZARIA.pdf)
 
 | Uso 1 |
 |------|------------------|
-| **Ferramenta e etapa** | Gemini: Utilizado na etapa de Modelagem Conceitual (Seções 6, 7 e 8) para revisão do Diagrama Entidade-Relacionamento desenhado no software brModelo. |
-| **Motivação** | Precisávamos validar se o diagrama construído possuía erros de lógica, redundâncias ou violações das regras formais de banco de dados antes da entrega final. |
-| **Prompt(s) utilizados** | "Me ajude a corrigir os erros antes de realizar o readme então, me explique de forma simples e objetiva do que mudar e por que." |
-| **Resposta recebida** | A IA apontou falhas críticas de normalização, como a criação de entidades de ação ("Checkout"), a alocação incorreta de atributos ("Endereço" ligado a "Delivery" em vez de "Cliente") e o uso de dados literais como estrutura (atributos "Broto" e "Cerveja" em vez de um genérico "Tamanho" ou "Nome"). A IA orientou a exclusão das entidades fantasmas e a unificação dos relacionamentos na entidade "Pedido". |
-| **Fontes consultadas e verificadas** | As correções sugeridas pela IA foram validadas pelo grupo através do cruzamento com os materiais didáticos da disciplina, especificamente os conceitos de não transformar processos (verbos) em entidades (substantivos) e a exigência de identificadores únicos. |
-| **Trechos rejeitados ou corrigidos** | A aplicação no brModelo foi feita de forma 100% manual pelo grupo, adaptando as sugestões visuais da IA para a interface da ferramenta (como a realocação das linhas de cardinalidade dos losangos "Faz" e "Contém"). |
-| **Justificativa da escolha final** | As orientações da IA foram acatadas porque enxugaram o modelo, garantindo a independência da tecnologia e alinhando o diagrama à 3ª Forma Normal na abstração conceitual, facilitando a futura implementação em SQL. |
-| **Reflexão crítica** | A IA foi muito eficaz na revisão de regras de negócio lógicas, mas possui a limitação de não poder editar o diagrama visualmente. Tivemos que descrever ou exportar imagens sucessivas para que ela pudesse "enxergar" as conexões, o que exige um bom domínio da nossa parte para aplicar as correções no software. |
+| **Ferramenta e etapa**
+*Gemini: Utilizado na etapa de Modelagem Conceitual (Seções 6, 7 e 8) para revisão do Diagrama Entidade-Relacionamento desenhado no software brModelo.* |
+| **Motivação** 
+*Precisávamos validar se o diagrama construído possuía erros de lógica, redundâncias ou violações das regras formais de banco de dados antes da entrega final.* |
+| **Prompt(s) utilizados** 
+*"Me ajude a corrigir os erros antes de realizar o readme então, me explique de forma simples e objetiva do que mudar e por que."* |
+| **Resposta recebida** 
+*A IA apontou falhas críticas de normalização, como a criação de entidades de ação ("Checkout"), a alocação incorreta de atributos ("Endereço" ligado a "Delivery" em vez de "Cliente") e o uso de dados literais como estrutura (atributos "Broto" e "Cerveja" em vez de um genérico "Tamanho" ou "Nome"). A IA orientou a exclusão das entidades fantasmas e a unificação dos relacionamentos na entidade "Pedido".* |
+| **Fontes consultadas e verificadas** 
+*As correções sugeridas pela IA foram validadas pelo grupo através do cruzamento com os materiais didáticos da disciplina, especificamente os conceitos de não transformar processos (verbos) em entidades (substantivos) e a exigência de identificadores únicos.* |
+| **Trechos rejeitados ou corrigidos** 
+*A aplicação no brModelo foi feita de forma 100% manual pelo grupo, adaptando as sugestões visuais da IA para a interface da ferramenta (como a realocação das linhas de cardinalidade dos losangos "Faz" e "Contém").* |
+| **Justificativa da escolha final** 
+*As orientações da IA foram acatadas porque enxugaram o modelo, garantindo a independência da tecnologia e alinhando o diagrama à 3ª Forma Normal na abstração conceitual, facilitando a futura implementação em SQL.* |
+| **Reflexão crítica** 
+*A IA foi muito eficaz na revisão de regras de negócio lógicas, mas possui a limitação de não poder editar o diagrama visualmente. Tivemos que descrever ou exportar imagens sucessivas para que ela pudesse "enxergar" as conexões, o que exige um bom domínio da nossa parte para aplicar as correções no software.* |
+
+---
 
 | Uso 2 - Estruturação dos Requisitos, Regras de Negócio e Descrição do Repositório |
 |------|------------------|
-| **Ferramenta e etapa** | Gemini: Utilizado nas etapas de planejamento de levantamento de dados, redação e aperfeiçoamento dos Processos de Negócio, Requisitos e Regras (Seções 2, 3 e 4) e elaboração da Introdução do GitHub. |
-| **Motivação** | Auxiliar a transformar o fluxograma inicial e as observações empíricas colhidas na pizzaria em um formato de texto técnico e estruturado (linguagem de Engenharia de Software). |
-| **Prompt(s) utilizados** | "Monte uma lista de perguntas que podem ser feitas na entrevista... Simplifique as explicações." e "Seguindo o markdown que te enviei, estou na seção ##3. Precisamos de ajuda no preenchimento, transforme *texto* em uma linguagem mais técnica e formal." |
-| **Resposta recebida** | A IA gerou um roteiro de entrevista prático focado nas "dores" da pizzaria (como o caos nos pedidos de sexta-feira) e, posteriormente, redigiu os Requisitos Funcionais (ex: RF01 - Gestão de Clientes), Requisitos Não Funcionais e Regras de Negócio (ex: Obrigatoriedade de vínculo financeiro) baseados nas cardinalidades do nosso DER. |
-| **Fontes consultadas e verificadas** | O conteúdo das regras geradas foi confrontado com a realidade da pizzaria analisada pelo membro do grupo que trabalha no local e a entrevista realizada pelos membros, garantindo que os gargalos propostos correspondiam ao mundo real. |
-| **Trechos rejeitados ou corrigidos** | Durante a geração de contexto, a IA "alucinou" afirmando que os alunos eram de semestres avançados e que possuíam conhecimentos de especialistas,  corrigimos ela para nossa realidade  atual e a mantemos com uma linguagem técnica mas explicativa conosco. Auxiliando no melhor entendimento de suas ações. |
-| **Justificativa da escolha final** | A estruturação técnica do texto foi mantida pois traduziu perfeitamente o comportamento do fluxograma, do modelo conceitual e dos textos bases construído pelo grupo, com jargões adequados à disciplina. |
-| **Reflexão crítica** | A alucinação da IA ao tentar adivinhar ao nos tratar como especialistas com anos de experiência serviu como um excelente lembrete de que o texto gerado não pode ser apenas "copiado e colado"  e que causaria obviamente uma enorme confusão e nos tiraria o aprendizado que o projeto proporciona. É necessário ler criticamente e corrigir a máquina para que o documento reflita exatamente a realidade do grupo. |
+| **Ferramenta e etapa** 
+*Gemini: Utilizado nas etapas de planejamento de levantamento de dados, redação e aperfeiçoamento dos Processos de Negócio, Requisitos e Regras (Seções 2, 3 e 4) e elaboração da Introdução do GitHub.* |
+| **Motivação** 
+*Auxiliar a transformar o fluxograma inicial e as observações empíricas colhidas na pizzaria em um formato de texto técnico e estruturado (linguagem de Engenharia de Software).* |
+| **Prompt(s) utilizados** 
+*"Monte uma lista de perguntas que podem ser feitas na entrevista... Simplifique as explicações." e "Seguindo o markdown que te enviei, estou na seção ##3. Precisamos de ajuda no preenchimento, transforme *texto* em uma linguagem mais técnica e formal."* |
+| **Resposta recebida** 
+*A IA gerou um roteiro de entrevista prático focado nas "dores" da pizzaria (como o caos nos pedidos de sexta-feira) e, posteriormente, redigiu os Requisitos Funcionais (ex: RF01 - Gestão de Clientes), Requisitos Não Funcionais e Regras de Negócio (ex: Obrigatoriedade de vínculo financeiro) baseados nas cardinalidades do nosso DER.* |
+| **Fontes consultadas e verificadas** 
+*O conteúdo das regras geradas foi confrontado com a realidade da pizzaria analisada pelo membro do grupo que trabalha no local e a entrevista realizada pelos membros, garantindo que os gargalos propostos correspondiam ao mundo real.* |
+| **Trechos rejeitados ou corrigidos** 
+*Durante a geração de contexto, a IA "alucinou" afirmando que os alunos eram de semestres avançados e que possuíam conhecimentos de especialistas,  corrigimos ela para nossa realidade  atual e a mantemos com uma linguagem técnica mas explicativa conosco. Auxiliando no melhor entendimento de suas ações.* |
+| **Justificativa da escolha final** 
+*A estruturação técnica do texto foi mantida pois traduziu perfeitamente o comportamento do fluxograma, do modelo conceitual e dos textos bases construído pelo grupo, com jargões adequados à disciplina.* |
+| **Reflexão crítica** 
+*A alucinação da IA ao tentar adivinhar ao nos tratar como especialistas com anos de experiência serviu como um excelente lembrete de que o texto gerado não pode ser apenas "copiado e colado"  e que causaria obviamente uma enorme confusão e nos tiraria o aprendizado que o projeto proporciona. É necessário ler criticamente e corrigir a máquina para que o documento reflita exatamente a realidade do grupo.* |
