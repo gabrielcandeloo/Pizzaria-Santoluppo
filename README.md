@@ -7,7 +7,7 @@
 - Davi Ramos de Oliveira - RGM 049576216
 - Gabriel Silva Candelo - RGM 48050938
 - John Antoni Rodrigo Quispe - RGM 49450492
-- Leon Correia da Silva - RGM 048036374
+- Leon Correia da Silva - RGM 48036374
 - Pablo Lorran Ferreira da Silva - RGM 48146978
 
 ---
