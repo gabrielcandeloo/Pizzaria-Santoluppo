@@ -150,8 +150,8 @@ Se o grupo usou alguma ferramenta de IA (ChatGPT, Claude, Gemini, Perplexity etc
 
 | Item | O que registrar |
 |------|------------------|
-| **Ferramenta e etapa** | Qual IA foi usada e em qual parte do trabalho (ex.: pesquisa sobre o setor da organização, redação do README, organização dos requisitos, revisão ortográfica/gramatical). |
-| **Motivação** | Por que o grupo recorreu à IA nesse ponto específico. |
+| **Ferramenta e etapa** | Utilizamos o Gemini para a criação de perguntas e para tirar duvidas em determinadas partes do projeto. |
+| **Motivação** | Recorremos a IA nesse ponto para uma melhor clareza do que colocariamos no projeto. |
 | **Prompt(s) utilizados** | Texto exato (ou muito próximo) do que foi perguntado/pedido à IA. |
 | **Resposta recebida** | Resumo ou trecho relevante da resposta da IA. |
 | **Fontes consultadas e verificadas** | Se a IA citou fontes/dados, quais foram checadas pelo grupo e como (ex.: comparação com o que foi observado na visita de campo). |
