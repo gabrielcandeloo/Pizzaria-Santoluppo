@@ -74,17 +74,53 @@ a
 ---
 
 ## 5. Dicionário de Dados Conceitual (Preliminar)
-*(vale 10% — Dimensão Procedimental - Segue o modelo do arquivo 02-03g_Exemplo_Dicionario_Dados.pdf)*
 
-Para cada entidade identificada, liste:
-
+**CLIENTE**
 | Atributo | Descrição | Regra de negócio associada |
 |----------|-----------|------------------------------|
-| *nome do atributo* | *o que ele representa* | *se houver alguma regra (obrigatoriedade, valores possíveis, etc.)* |
+| `@ID_CLIENTE` | Identificador único do cliente no sistema. | Obrigatório (Chave Primária). Valor numérico gerado automaticamente. |
+| `NM_CLIENTE` | Nome completo do consumidor. | Obrigatório (varchar). Utilizado para identificação no balcão e no delivery. |
+| `DS_TELEFONE` | Número de telefone de contacto. | Obrigatório (varchar). Utilizado para histórico e validação. Exemplo fictício: (11) 99999-0000. |
+| `DS_RUA` | Nome da rua para envio da encomenda. | Obrigatório se o atributo `TP_ENTREGA` (no Pedido) for "Delivery". Exemplo fictício: Rua das Flores, 123. |
+| `DS_BAIRRO` | Bairro da morada de entrega. | Obrigatório se a modalidade do pedido for "Delivery". |
+| `CD_CEP` | Código de Endereçamento Postal. | Obrigatório se a modalidade do pedido for "Delivery". Exemplo fictício: 00000-000. |
 
-*Mantenha o dicionário organizado e padronizado (mesmo formato de tabela para todas as entidades).*
+**PEDIDO**
+| Atributo | Descrição | Regra de negócio associada |
+|----------|-----------|------------------------------|
+| `@ID_PEDIDO` | Identificador único da comanda gerada. | Obrigatório (Chave Primária). Valor numérico. |
+| `DT_PEDIDO` | Data e hora em que a venda foi aberta. | Obrigatório (datetime). Guarda o momento exato da compra. |
+| `TP_ENTREGA` | Classifica a modalidade logística da encomenda. | Obrigatório. Valores restritos a: [Delivery, Retirada]. Se "Delivery", aciona a obrigatoriedade de endereço no Cliente. |
+| `ID_CLIENTE` | Referência ao cliente que realizou a compra. | Obrigatório (Chave Estrangeira). Vínculo mandatório (1,1) para impedir a criação de pedidos anónimos. |
 
-**Atenção à privacidade:** se forem usados exemplos de valores para ilustrar os atributos, esses exemplos devem ser **fictícios** — não utilize dados reais de clientes, fiéis, beneficiários, doadores ou funcionários da organização (nomes, CPFs, contatos etc.), mesmo que tenham sido observados durante a pesquisa de campo. Os exemplos devem apenas ser **coerentes com as operações reais** observadas.
+**PIZZA**
+| Atributo | Descrição | Regra de negócio associada |
+|----------|-----------|------------------------------|
+| `@ID_PIZZA` | Identificador exclusivo da pizza no catálogo. | Obrigatório (Chave Primária). Valor numérico. |
+| `DS_SABOR` | Variação de sabor do produto de fabrico próprio. | Obrigatório (varchar). Exemplo: Calabresa, Marguerita. |
+| `TP_TAMANHO` | Dimensão da pizza selecionada. | Obrigatório (varchar). Valores possíveis restritos a: [P, M, G]. |
+| `VL_PRECO` | Preço de venda comercial estipulado. | Obrigatório (numeric). Valor base para a composição do faturamento. |
+
+**BEBIDAS**
+| Atributo | Descrição | Regra de negócio associada |
+|----------|-----------|------------------------------|
+| `@ID_BEBIDA` | Identificador exclusivo da bebida no catálogo. | Obrigatório (Chave Primária). Valor numérico. |
+| `NM_BEBIDA` | Nome comercial do item padronizado de revenda. | Obrigatório (varchar). Exemplo: Refrigerante Cola 2L. |
+| `VL_PRECO` | Preço de venda do produto. | Obrigatório (numeric). |
+
+**PAGAMENTO**
+| Atributo | Descrição | Regra de negócio associada |
+|----------|-----------|------------------------------|
+| `@ID_PAGAMENTO` | Identificador do registo financeiro (faturamento). | Obrigatório (Chave Primária). |
+| `VL_TOTAL` | Montante financeiro total cobrado na operação. | Obrigatório (numeric). O processamento exige o compromisso financeiro atrelado à venda. |
+| `ID_PEDIDO` | Vínculo com a comanda de origem. | Obrigatório (Chave Estrangeira). Relação de 1:1, garantindo o lastro financeiro (não existem pedidos sem prestação de contas). |
+| `ID_FORMA_PGTO`| Referência à modalidade escolhida para o acerto. | Obrigatório (Chave Estrangeira). Deve remeter a um ID válido no catálogo de formas de pagamento. |
+
+**FORMAS_DE_PAGAMENTOS**
+| Atributo | Descrição | Regra de negócio associada |
+|----------|-----------|------------------------------|
+| `@ID_FORMA_PGTO`| Identificador da modalidade no catálogo. | Obrigatório (Chave Primária). |
+| `DS_METODO` | Nome do método transacional padronizado. | Obrigatório (varchar). Impede escrita livre. Exemplos: PIX, Cartão de Crédito, Dinheiro. |
 
 ---
 
