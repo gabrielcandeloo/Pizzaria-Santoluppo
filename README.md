@@ -168,7 +168,7 @@ a
 
 ## 7. Diagrama Entidade-Relacionamento (DER)
 
-Diagrama anexado: [Diagrama Entidade-Relacionamento](docs/DER-PIZZARIA.pdf)
+Diagrama anexado: [Diagrama Entidade-Relacionamento](docs/DER-PIZZARIA_page-0001.jpg)
 
 ---
 
