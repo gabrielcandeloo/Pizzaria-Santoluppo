@@ -51,7 +51,7 @@
 ### 3.2 Requisitos Não Funcionais
 
 *RNF01 (Desempenho): O sistema deve processar e registrar novas inserções na base de dados (novos pedidos) em menos de 3 segundos, assegurando a agilidade necessária para suportar o fluxo de chamadas e mensagens durante os picos de atendimento (ex.: sextas-feiras à noite).*
-a
+
 *RNF02 (Usabilidade): A interface de introdução de dados deve ser intuitiva e de rápida aprendizagem, permitindo que qualquer um dos 6 a 8 funcionários da equipa consiga registrar comandas no sistema sem necessidade de formação técnica extensa.*
 
 *RNF03 (Segurança e Privacidade): O sistema deve garantir a proteção dos dados pessoais armazenados (nome, morada e telefone dos clientes), restringindo a sua extração em massa e garantindo o acesso apenas a utilizadores autorizados no contexto do serviço logístico.*
@@ -74,17 +74,53 @@ a
 ---
 
 ## 5. Dicionário de Dados Conceitual (Preliminar)
-*(vale 10% — Dimensão Procedimental - Segue o modelo do arquivo 02-03g_Exemplo_Dicionario_Dados.pdf)*
 
-Para cada entidade identificada, liste:
-
+**CLIENTE**
 | Atributo | Descrição | Regra de negócio associada |
 |----------|-----------|------------------------------|
-| *nome do atributo* | *o que ele representa* | *se houver alguma regra (obrigatoriedade, valores possíveis, etc.)* |
+| `@ID_CLIENTE` | Identificador único do cliente no sistema. | Obrigatório (Chave Primária). Valor numérico gerado automaticamente. |
+| `NM_CLIENTE` | Nome completo do consumidor. | Obrigatório (varchar). Utilizado para identificação no balcão e no delivery. |
+| `DS_TELEFONE` | Número de telefone de contacto. | Obrigatório (varchar). Utilizado para histórico e validação. Exemplo fictício: (11) 99999-0000. |
+| `DS_RUA` | Nome da rua para envio da encomenda. | Obrigatório se o atributo `TP_ENTREGA` (no Pedido) for "Delivery". Exemplo fictício: Rua das Flores, 123. |
+| `DS_BAIRRO` | Bairro da morada de entrega. | Obrigatório se a modalidade do pedido for "Delivery". |
+| `CD_CEP` | Código de Endereçamento Postal. | Obrigatório se a modalidade do pedido for "Delivery". Exemplo fictício: 00000-000. |
 
-*Mantenha o dicionário organizado e padronizado (mesmo formato de tabela para todas as entidades).*
+**PEDIDO**
+| Atributo | Descrição | Regra de negócio associada |
+|----------|-----------|------------------------------|
+| `@ID_PEDIDO` | Identificador único da comanda gerada. | Obrigatório (Chave Primária). Valor numérico. |
+| `DT_PEDIDO` | Data e hora em que a venda foi aberta. | Obrigatório (datetime). Guarda o momento exato da compra. |
+| `TP_ENTREGA` | Classifica a modalidade logística da encomenda. | Obrigatório. Valores restritos a: [Delivery, Retirada]. Se "Delivery", aciona a obrigatoriedade de endereço no Cliente. |
+| `ID_CLIENTE` | Referência ao cliente que realizou a compra. | Obrigatório (Chave Estrangeira). Vínculo mandatório (1,1) para impedir a criação de pedidos anónimos. |
 
-**Atenção à privacidade:** se forem usados exemplos de valores para ilustrar os atributos, esses exemplos devem ser **fictícios** — não utilize dados reais de clientes, fiéis, beneficiários, doadores ou funcionários da organização (nomes, CPFs, contatos etc.), mesmo que tenham sido observados durante a pesquisa de campo. Os exemplos devem apenas ser **coerentes com as operações reais** observadas.
+**PIZZA**
+| Atributo | Descrição | Regra de negócio associada |
+|----------|-----------|------------------------------|
+| `@ID_PIZZA` | Identificador exclusivo da pizza no catálogo. | Obrigatório (Chave Primária). Valor numérico. |
+| `DS_SABOR` | Variação de sabor do produto de fabrico próprio. | Obrigatório (varchar). Exemplo: Calabresa, Marguerita. |
+| `TP_TAMANHO` | Dimensão da pizza selecionada. | Obrigatório (varchar). Valores possíveis restritos a: [P, M, G]. |
+| `VL_PRECO` | Preço de venda comercial estipulado. | Obrigatório (numeric). Valor base para a composição do faturamento. |
+
+**BEBIDAS**
+| Atributo | Descrição | Regra de negócio associada |
+|----------|-----------|------------------------------|
+| `@ID_BEBIDA` | Identificador exclusivo da bebida no catálogo. | Obrigatório (Chave Primária). Valor numérico. |
+| `NM_BEBIDA` | Nome comercial do item padronizado de revenda. | Obrigatório (varchar). Exemplo: Refrigerante Cola 2L. |
+| `VL_PRECO` | Preço de venda do produto. | Obrigatório (numeric). |
+
+**PAGAMENTO**
+| Atributo | Descrição | Regra de negócio associada |
+|----------|-----------|------------------------------|
+| `@ID_PAGAMENTO` | Identificador do registo financeiro (faturamento). | Obrigatório (Chave Primária). |
+| `VL_TOTAL` | Montante financeiro total cobrado na operação. | Obrigatório (numeric). O processamento exige o compromisso financeiro atrelado à venda. |
+| `ID_PEDIDO` | Vínculo com a comanda de origem. | Obrigatório (Chave Estrangeira). Relação de 1:1, garantindo o lastro financeiro (não existem pedidos sem prestação de contas). |
+| `ID_FORMA_PGTO`| Referência à modalidade escolhida para o acerto. | Obrigatório (Chave Estrangeira). Deve remeter a um ID válido no catálogo de formas de pagamento. |
+
+**FORMAS_DE_PAGAMENTOS**
+| Atributo | Descrição | Regra de negócio associada |
+|----------|-----------|------------------------------|
+| `@ID_FORMA_PGTO`| Identificador da modalidade no catálogo. | Obrigatório (Chave Primária). |
+| `DS_METODO` | Nome do método transacional padronizado. | Obrigatório (varchar). Impede escrita livre. Exemplos: PIX, Cartão de Crédito, Dinheiro. |
 
 ---
 
@@ -132,14 +168,19 @@ Para cada entidade identificada, liste:
 
 ## 7. Diagrama Entidade-Relacionamento (DER)
 
-Diagrama anexado: [Diagrama Entidade-Relacionamento](docs/DER-PIZZARIA.pdf)
+Diagrama anexado: [Diagrama Entidade-Relacionamento](docs/DER-PIZZARIA_page-0001.jpg)
 
 ---
 
 ## 8. Justificativa Técnica
-*(vale 7,5% — sozinho, é o subcritério de maior peso dentro da Dimensão Conceitual)*
 
-*Explique e defenda as decisões de abstração e modelagem tomadas: por que essas entidades, esses atributos, esses relacionamentos e essas cardinalidades — e não outras alternativas possíveis?*
+O modelo de dados foi concebido para refletir a operação enxuta da Pizzaria Santoluppo, priorizando a integridade das informações e a velocidade durante os picos de atendimento. As decisões de abstração evitaram a super-complexidade, focando na normalização do que é essencial para o fluxo de negócio do balcão à cozinha.
+
+*   **Separação entre Pizzas e Bebidas (Catálogos Independentes):** A decisão de segregar produtos justifica-se pela natureza distinta dos itens. As pizzas exigem atributos de fabricação própria e variação (`DS_SABOR`, `TP_TAMANHO`), enquanto as bebidas são itens padronizados de revenda que requerem apenas nome e preço. Agrupá-las numa única entidade "Produto" geraria anomalias e campos nulos desnecessários, ferindo as boas práticas de modelagem.
+*   **Entidade de Domínio para Formas de Pagamento:** Em vez de registrar o método de acerto como texto livre na comanda, optou-se por criar a entidade `FORMAS_DE_PAGAMENTOS`. Essa escolha elimina erros de digitação (ex.: variações como "Pix", "PIX", "P I X") e padroniza as opções transacionais.
+*   **Cardinalidade Obrigatória entre Cliente e Pedido (1:N com restrição 1,1):** A regra de negócio de "Identidade Exigida" impede o lançamento de pedidos anónimos. A cardinalidade mandatória garante que nenhum pedido exista sem o seu respetivo cliente, o que é crucial para viabilizar o despacho logístico de *Delivery* com base no endereço composto (`DS_RUA`, `DS_BAIRRO`, `CD_CEP`).
+*   **Lastro Financeiro Estrito (Pedido 1:1 Pagamento):** Optou-se por uma relação estrita de 1:1 entre a venda e o faturamento. Dada a realidade de uma equipe reduzida (6 a 8 funcionários), o modelo assegura um fecho de caixa sem dependências de aprovações gerenciais complexas, impedindo a existência de comandas "órfãs" sem prestação de contas.
+*   **Conversão de Processos em Atributos:** Com base na terceira forma normal e na revisão arquitetural, evitou-se o erro de transformar etapas operacionais (verbos) em tabelas isoladas. A logística foi abstraída com eficiência para o atributo estruturado `TP_RETIRADA | TP_DELIVERY` dentro da entidade núcleo `Pedido`, centralizando a transação sem poluir o Diagrama Entidade-Relacionamento.
 
 ---
 
