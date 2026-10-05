@@ -173,9 +173,14 @@ Diagrama anexado: [Diagrama Entidade-Relacionamento](docs/DER-PIZZARIA_page-0001
 ---
 
 ## 8. Justificativa Técnica
-*(vale 7,5% — sozinho, é o subcritério de maior peso dentro da Dimensão Conceitual)*
 
-*Explique e defenda as decisões de abstração e modelagem tomadas: por que essas entidades, esses atributos, esses relacionamentos e essas cardinalidades — e não outras alternativas possíveis?*
+O modelo de dados foi concebido para refletir a operação enxuta da Pizzaria Santoluppo, priorizando a integridade das informações e a velocidade durante os picos de atendimento. As decisões de abstração evitaram a super-complexidade, focando na normalização do que é essencial para o fluxo de negócio do balcão à cozinha.
+
+*   **Separação entre Pizzas e Bebidas (Catálogos Independentes):** A decisão de segregar produtos justifica-se pela natureza distinta dos itens. As pizzas exigem atributos de fabricação própria e variação (`DS_SABOR`, `TP_TAMANHO`), enquanto as bebidas são itens padronizados de revenda que requerem apenas nome e preço. Agrupá-las numa única entidade "Produto" geraria anomalias e campos nulos desnecessários, ferindo as boas práticas de modelagem.
+*   **Entidade de Domínio para Formas de Pagamento:** Em vez de registrar o método de acerto como texto livre na comanda, optou-se por criar a entidade `FORMAS_DE_PAGAMENTOS`. Essa escolha elimina erros de digitação (ex.: variações como "Pix", "PIX", "P I X") e padroniza as opções transacionais.
+*   **Cardinalidade Obrigatória entre Cliente e Pedido (1:N com restrição 1,1):** A regra de negócio de "Identidade Exigida" impede o lançamento de pedidos anónimos. A cardinalidade mandatória garante que nenhum pedido exista sem o seu respetivo cliente, o que é crucial para viabilizar o despacho logístico de *Delivery* com base no endereço composto (`DS_RUA`, `DS_BAIRRO`, `CD_CEP`).
+*   **Lastro Financeiro Estrito (Pedido 1:1 Pagamento):** Optou-se por uma relação estrita de 1:1 entre a venda e o faturamento. Dada a realidade de uma equipe reduzida (6 a 8 funcionários), o modelo assegura um fecho de caixa sem dependências de aprovações gerenciais complexas, impedindo a existência de comandas "órfãs" sem prestação de contas.
+*   **Conversão de Processos em Atributos:** Com base na terceira forma normal e na revisão arquitetural, evitou-se o erro de transformar etapas operacionais (verbos) em tabelas isoladas. A logística foi abstraída com eficiência para o atributo estruturado `TP_RETIRADA | TP_DELIVERY` dentro da entidade núcleo `Pedido`, centralizando a transação sem poluir o Diagrama Entidade-Relacionamento.
 
 ---
 
