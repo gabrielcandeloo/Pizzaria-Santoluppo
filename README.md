@@ -35,7 +35,7 @@
 
 *Controle de Estoque e Compras (Processo Paralelo): Independentemente das vendas do momento, o volume de ingredientes é monitorado. Quando um insumo atinge o estoque mínimo de segurança, a gestão aciona o processo de compras junto aos fornecedores para reabastecer a pizzaria antes do próximo turno de pico.*
 
-- [Fluxograma do Banco de Dados (Básico)](docs/fluxograma-basico-projetosantoluppo.png)
+- [Fluxograma do Banco de Dados (Básico)](docs/feature-readme.jpeg)
 
 ---
 
