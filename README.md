@@ -44,8 +44,11 @@
 ### 3.1 Requisitos Funcionais
 
 *RF01 (Gestão de Clientes): O sistema deve permitir o registro, atualização e consulta dos dados dos clientes, armazenando obrigatoriamente o nome, telefone e o endereço desdobrado em rua, bairro e código postal (CEP).*
+
 *RF02 (Controle de Pedidos): O sistema deve permitir a abertura de novas comandas, vinculando cada pedido a um cliente de forma mandatória e registrando a data, hora e o tipo de entrega (Delivery ou Retirada).*
+
 *RF03 (Gestão de Itens e Cardápio): O sistema deve permitir a inclusão de múltiplos produtos num mesmo pedido, distinguindo entre pizzas (com atributos específicos de sabor e tamanho) e bebidas, e registrando o preço de cada item.*
+
 *RF04 (Faturação e Pagamentos): O sistema deve associar estritamente cada pedido finalizado a uma operação de pagamento, calculando o valor total e exigindo a seleção de um método de pagamento a partir de um catálogo padronizado e pré-definido.*
 
 ### 3.2 Requisitos Não Funcionais
@@ -64,11 +67,15 @@
 
 - **Regras operacionais:**
 *Identidade Obrigatória: Um pedido só pode ser iniciado no sistema se houver um cliente identificado e vinculado (refletido na cardinalidade 1,1 do diagrama).*
+
 *Lastro Financeiro: O processamento da comanda exige um vínculo obrigatório com um registro de pagamento (cardinalidade 1,1 entre Pedido e Pagamento), impedindo que existam pedidos sem prestação de contas no caixa.*
+
 *Meios de Pagamento: A modalidade de acerto só pode ser escolhida a partir do catálogo pré-definido na entidade de domínio "Formas de Pagamentos".*
 
 - **Restrições organizacionais:**
+  
 *Validação Logística: Se o atributo Tipo_Entrega for assinalado como "Delivery", o sistema assume como obrigatório o preenchimento do endereço composto (Rua, Bairro e CEP) do cliente para viabilizar o despacho.*
+
 *Perfil de Operação Enxuta: Dado que a pizzaria opera com uma equipe de 6 a 8 funcionários, o modelo de negócio assume que não há departamentos isolados. O fluxo deve ser contínuo do balcão à cozinha sem depender de aprovações gerenciais em múltiplas etapas.*
 
 ---
