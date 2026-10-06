@@ -18,13 +18,13 @@
 - **Contexto e porte:** *Uma empresa com fins lucrativos do ramo alimentício, com uma operação envolvendo aproximadamente 6 colaboradores, com um volume de 25 pedidos por dia.*
 - **Problemas e necessidades identificados:** *qual é a "crise operacional" — o que está desorganizado hoje (planilhas soltas, papel, falta de controle de estoque/doações/cadastros, etc.)?*
 - **Justificativa da escolha:** *A escolha se deu pelo fácil acesso a toda estrutura necessária para o projeto, desde acesso ao local até a quantidade real de dados que são coletados diariamente*
-- **Evidências da organização:** *Redes Sociais: Instagram https://www.instagram.com/santoluppopizzaria/ - Endereço: Av. Sapopemba 1333 Vila Reg. Feijó CEP:03345-001 - Contato: Telefone(11) 2028-8486 - WhatsApp (11) 995585599 - Fotos no local: [Frente da Pizzaria](docs/Pizzaria-Frente.jpeg) - [Membros presentes: Pablo Lorran, Davi Ramos, Leon Correia e John Antoni](membros-entrevista.jpeg)*
+- **Evidências da organização:** *Redes Sociais: Instagram https://www.instagram.com/santoluppopizzaria/ - Endereço: Av. Sapopemba 1333 Vila Reg. Feijó CEP:03345-001 - Contato: Telefone(11) 2028-8486 - WhatsApp (11) 995585599 - Fotos no local: [Frente da Pizzaria](docs/Pizzaria-Frente.jpeg) - [Membros presentes: Pablo Lorran, Davi Ramos, Leon Correia e John Antoni](docs/membros-entrevista.jpeg)*
 
 ---
 
 ## 2. Processos de Negócio
 
-- **Principais processos mapeados:**
+**Principais processos mapeados:**
 *Gestão de Pedidos (Venda): O fluxo central inicia quando o cliente faz contato via WhatsApp, telefone ou balcão. O atendente identifica o cliente (ou realiza um novo cadastro), anota os itens do pedido com suas especificações (ex: metades, remoção de ingredientes, bordas) e confirma o endereço e a forma de entrega.*
 
 *Produção (Cozinha): A comanda gerada pelo pedido é enviada à área de preparo. A equipe da cozinha utiliza os insumos disponíveis no estoque diário para montar e assar as pizzas conforme as especificações exigidas na venda.*
