@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="pt-br"> 
+<head>
+    <meta charset="utf-8">
+    <title>Dicionário de Dados</title> 
+
+    <style>
+        table, th, td 
+        { border: 2px solid black; border-collapse: collapse; }
+        
+        th, td 
+        { padding: 15px; text-align: left; }
+
+        .tabela_dados tr:nth-child(even) 
+        { background-color: #eee; }
+
+        .chave_pk
+        { color: red; }
+        .chave_fk
+        { color: rgb(0, 74, 184); }
+
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1 id="topo">Índice</h1>
+    <ul>
+    <li><a href="#tabela_cliente">Ir para tabela Cliente</a></li>
+    <li><a href="#tabela_pedidos">Ir para tabela Pedidos</a></li>
+    <li><a href="#tabela_pizza">Ir para tabela Pizza</a></li>
+    <li><a href="#tabela_bebida">Ir para tabela Bebidas</a></li>
+    <li><a href="#tabela_pagamento">Ir para tabela Pagamentos</a></li>
+    <li><a href="#tabela_forma_pagamento">Ir para tabela Formas de Pagamentos</a></li>
+    </ul>
+    
+    <h2 id="tabela_cliente">Tabela Cliente</h2>
+    <table class="tabela_dados">
+
+        <!-- Linha de Cabeçalhos -->
+        <tr>
+            <th>Atributo</th>
+            <th>Descrição</th>
+            <th>Regra de negócio associada</th>
+        </tr>
+        <tr>
+            <td class="chave_pk" title="Primary Key (Chave Primária)"><code>ID_CLIENTE</code></td>
+            <td>Identificador único do cliente no sistema.</td>
+            <td>Obrigatório (PK). Valor numérico gerado automaticamente.</td>
+        </tr>
+        <tr>
+            <td><code>NM_CLIENTE</code></td>
+            <td>Nome completo do consumidor.</td>
+            <td>Obrigatório (varchar). Utilizado para identificação no balcão e no delivery.</td>
+        </tr>
+        <tr>
+            <td><code>DS_TELEFONE</code></td>
+            <td>Número de telefone de contato.</td>
+            <td>Obrigatório (varchar). Utilizado para histórico e validação. Exemplo fictício: (11) 99999-0000.</td>
+        </tr>
+        <tr>
+            <td><code>DS_RUA</code></td>
+            <td>Nome da rua para envio da encomenda.</td>
+            <td>Obrigatório se o atributo TP_ENTREGA (no Pedido) for "Delivery". Exemplo fictício: Rua das Flores, 123.</td>
+        </tr>
+        <tr>
+            <td><code>DS_BAIRRO</code></td>
+            <td>Bairro da morada de entrega.</td>
+            <td>Obrigatório se a modalidade do pedido for "Delivery".</td>
+        <tr>
+            <td><code>CD_CEP</code></td>
+            <td>Código de Endereçamento Postal.</td>
+            <td>Obrigatório se a modalidade do pedido for "Delivery". Exemplo fictício: 00000-000.</td>
+        </tr>
+    </table>
+
+    <a href="#topo">Voltar ao início</a>
+
+    <h2 id="tabela_pedidos">Tabela Pedidos</h2>
+    <table class="tabela_dados">
+    
+        <!-- Linha de Cabeçalhos -->
+        <tr>
+            <th>Atributo</th>
+            <th>Descrição</th>
+            <th>Regra de negócio associada</th>
+        </tr>
+
+        <tr>
+            <td title="Primary Key (Chave Primária)" class="chave_pk"><code>ID_PEDIDO</code></td>
+            <td>Identificador único da comanda gerada.</td>
+            <td>Obrigatório (PK). Valor numérico.</td>
+        </tr>
+
+        <tr>
+            <td><code>DT_PEDIDO</code></td>
+            <td>Data e hora em que a venda foi aberta.</td>
+            <td>Obrigatório (datetime). Guarda o momento exato da compra.</td>
+        </tr>
+
+        <tr>
+            <td><code>TP_ENTREGA</code></td>
+            <td>Classifica a modalidade logística da encomenda.</td>
+            <td>Obrigatório. Valores restritos a: [Delivery, Retirada]. Se "Delivery", aciona a obrigatoriedade de endereço no Cliente.</td>
+        </tr>
+        <tr>
+            <td class="chave_fk" title="Foreign Key (Chave Estrangeira)"><code>ID_CLIENTE</code></td>
+            <td>Referência ao cliente que realizou a compra.</td>
+            <td>Obrigatório (FK). Vínculo mandatório (1,1) para impedir a criação de pedidos anónimos.</td>
+        </tr>
+    </table>
+
+    <a href="#topo">Voltar ao início</a>
+
+    <h2 id="tabela_pizza">Tabela Pizza</h2>
+    <table class="tabela_dados">
+ 
+        <!-- Linha de Cabeçalhos -->
+        <tr>
+            <th>Atributo</th>
+            <th>Descrição</th>
+            <th>Regra de negócio associada</th>
+        </tr>
+
+        <tr>
+            <td title="Primary Key (Chave Primária)" class="chave_pk"><code>ID_PIZZA</code></td>
+            <td>Identificador exclusivo da pizza no catálogo.</td>
+            <td>Obrigatório (PK). Valor numérico.</td>
+        </tr>
+
+        <tr>
+            <td><code>DS_SABOR</code></td>
+            <td>Variação de sabor do produto de fabrico próprio.</td>
+            <td>Obrigatório (varchar). Exemplo: Calabresa, Marguerita.</td>
+        </tr>
+
+        <tr>
+            <td><code>TP_TAMANHO</code></td>
+            <td>Dimensão da pizza selecionada.</td>
+            <td>Obrigatório (varchar). Valores possíveis restritos a: [P, M, G].</td>
+        </tr>
+
+        <tr>
+            <td><code>VL_PRECO</code></td>
+            <td>Preço de venda comercial estipulado.</td>
+            <td>Obrigatório (numeric). Valor base para a composição do faturamento.</td>
+        </tr>
+    </table>
+
+    <a href="#topo">Voltar ao início</a>
+
+    <h2 id="tabela_bebida">Tabela Bebidas</h2>
+    <table class="tabela_dados">
+ 
+        <!-- Linha de Cabeçalhos -->
+        <tr>
+            <th>Atributo</th>
+            <th>Descrição</th>
+            <th>Regra de negócio associada</th>
+        </tr>
+
+        <tr>
+            <td title="Primary Key (Chave Primária)" class="chave_pk"><code>ID_BEBIDA</code></td>
+            <td>Identificador exclusivo da bebida no catálogo.</td>
+            <td>Obrigatório (PK). Valor numérico.</td>
+        </tr>
+
+        <tr>
+            <td><code>NM_BEBIDA</code></td>
+            <td>Nome comercial do item padronizado de revenda.</td>
+            <td>Obrigatório (varchar). Exemplo: Refrigerante Cola 2L.</td>
+        </tr>
+
+        <tr>
+            <td><code>VL_PRECO</code></td>
+            <td>Preço de venda do produto.</td>
+            <td>Obrigatório (numeric).</td>
+        </tr>
+    </table>
+
+    <a href="#topo">Voltar ao início</a>
+
+    <h2 id="tabela_pagamento">Tabela Pagamentos</h2>
+    <table class="tabela_dados">
+
+        <!-- Linha de Cabeçalhos -->
+        <tr>
+            <th>Atributo</th>
+            <th>Descrição</th>
+            <th>Regra de negócio associada</th>
+        </tr>
+
+        <tr>
+            <td title="Primary Key (Chave Primária)" class="chave_pk"><code>ID_PAGAMENTO</code></td>
+            <td>Identificador do registo financeiro (faturamento).</td>
+            <td>Obrigatório (PK).</td>
+        </tr>
+
+        <tr>
+            <td><code>VL_TOTAL</code></td>
+            <td>Montante financeiro total cobrado na operação.</td>
+            <td>Obrigatório (numeric). O processamento exige o compromisso financeiro atrelado à venda.</td>
+        </tr>
+
+        <tr>
+            <td class="chave_fk" title="Foreign Key (Chave Estrangeira)"><code>ID_PEDIDO</code></td>
+            <td>Vínculo com a comanda de origem.</td>
+            <td>Obrigatório (FK). Relação de 1:1, garantindo o lastro financeiro (não existem pedidos sem prestação de contas).</td>
+        </tr>
+
+        <tr>
+            <td class="chave_fk" title="Foreign Key (Chave Estrangeira)"><code>ID_FORMA_PGTO</code></td>
+            <td>Referência à modalidade escolhida para o acerto.</td>
+            <td>Obrigatório (FK). Deve remeter a um ID válido no catálogo de formas de pagamento.</td>
+        </tr>
+    </table>
+
+    <a href="#topo">Voltar ao início</a>
+
+    <h2 id="tabela_forma_pagamento">Tabela Forma de Pagamento</h2>
+    <table class="tabela_dados">
+
+        <!-- Linha de Cabeçalhos -->
+        <tr>
+            <th>Atributo</th>
+            <th>Descrição</th>
+            <th>Regra de negócio associada</th>
+        </tr>
+        <tr>
+            <td title="Primary Key (Chave Primária)" class="chave_pk"><code>ID_FORMA_PGTO</code></td>
+            <td>Identificador da modalidade no catálogo.</td>
+            <td>Obrigatório (PK).</td>
+        </tr>
+        <tr>
+            <td><code>DS_METODO</code></td>
+            <td>Nome do método transacional padronizado.</td>
+            <td>Obrigatório (varchar). Impede escrita livre. Exemplos: PIX, Cartão de Crédito, Dinheiro.</td>
+        </tr>
+    </table>
+
+    <a href="#topo">Voltar ao início</a>
+
+    <hr>
+
+    <h2>Legenda</h2>
+
+    <dl>
+
+    <dt>Termo 1: <strong>PK</strong></dt> 
+    <dd>Significado 1: Primary Key (Chave Primária) - Identificador único da tabela.</dd>
+    <dt>Termo 2: <strong>FK</strong></dt> 
+    <dd>Significado 2: Foreign Key (Chave Estrangeira) - Campo que faz referência à chave primária de outra tabela.</dd>
+    <dt>Termo 3: <strong>varchar</strong></dt> 
+    <dd>Significado 3: Tipo de dado de caracteres de comprimento variável usado em bancos de dados relacionais para armazenar textos e números..</dd>
+    <dt>Termo 4: <strong>numeric</strong></dt> 
+    <dd>Significado 4: Tipo numérico exato usado para armazenar números com precisão e escala fixas.</dd>
+    <dt>Termo 5: <strong>datetime</strong></dt>
+    <dd>Significado 5: Tipo de dado ou módulo usado em programação para representar e manipular informações de data e hora simultaneamente.</dd>
+    <!--<dt>Termo ?: <strong>RN</strong></dt> 
+    <dd>Significado ?: Regra de Negócio - Condição obrigatória do sistema.</dd>
+    </dl>
+    <a href="#topo">Voltar ao início</a -->
+
+</body>
+</html>

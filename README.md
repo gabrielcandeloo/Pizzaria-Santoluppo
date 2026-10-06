@@ -18,13 +18,13 @@
 - **Contexto e porte:** *Uma empresa com fins lucrativos do ramo alimentício, com uma operação envolvendo aproximadamente 6 colaboradores, com um volume de 25 pedidos por dia.*
 - **Problemas e necessidades identificados:** *qual é a "crise operacional" — o que está desorganizado hoje (planilhas soltas, papel, falta de controle de estoque/doações/cadastros, etc.)?*
 - **Justificativa da escolha:** *A escolha se deu pelo fácil acesso a toda estrutura necessária para o projeto, desde acesso ao local até a quantidade real de dados que são coletados diariamente*
-- **Evidências da organização:** *Redes Sociais: Instagram https://www.instagram.com/santoluppopizzaria/ - Endereço: Av. Sapopemba 1333 Vila Reg. Feijó CEP:03345-001 - Contato: Telefone(11) 2028-8486 - WhatsApp (11) 995585599 - Fotos no local: [Frente da Pizzaria](docs/Pizzaria-Frente.jpeg) - [Membros presentes: Pablo Lorran, Davi Ramos, Leon Correia e John Antoni](membros-entrevista.jpeg)*
+- **Evidências da organização:** *Redes Sociais: Instagram https://www.instagram.com/santoluppopizzaria/ - Endereço: Av. Sapopemba 1333 Vila Reg. Feijó CEP:03345-001 - Contato: Telefone(11) 2028-8486 - WhatsApp (11) 995585599 - Fotos no local: [Frente da Pizzaria](docs/Pizzaria-Frente.jpeg) - [Membros presentes: Pablo Lorran, Davi Ramos, Leon Correia e John Antoni](docs/membros-entrevista.jpeg)*
 
 ---
 
 ## 2. Processos de Negócio
 
-- **Principais processos mapeados:**
+**Principais processos mapeados:**
 *Gestão de Pedidos (Venda): O fluxo central inicia quando o cliente faz contato via WhatsApp, telefone ou balcão. O atendente identifica o cliente (ou realiza um novo cadastro), anota os itens do pedido com suas especificações (ex: metades, remoção de ingredientes, bordas) e confirma o endereço e a forma de entrega.*
 
 *Produção (Cozinha): A comanda gerada pelo pedido é enviada à área de preparo. A equipe da cozinha utiliza os insumos disponíveis no estoque diário para montar e assar as pizzas conforme as especificações exigidas na venda.*
@@ -35,7 +35,7 @@
 
 *Controle de Estoque e Compras (Processo Paralelo): Independentemente das vendas do momento, o volume de ingredientes é monitorado. Quando um insumo atinge o estoque mínimo de segurança, a gestão aciona o processo de compras junto aos fornecedores para reabastecer a pizzaria antes do próximo turno de pico.*
 
-- [Fluxograma do Banco de Dados (Básico)](docs/fluxograma-basico-projetosantoluppo.png)
+- [Fluxograma do Banco de Dados (Básico)](docs/feature-readme.jpeg)
 
 ---
 
@@ -44,14 +44,17 @@
 ### 3.1 Requisitos Funcionais
 
 *RF01 (Gestão de Clientes): O sistema deve permitir o registro, atualização e consulta dos dados dos clientes, armazenando obrigatoriamente o nome, telefone e o endereço desdobrado em rua, bairro e código postal (CEP).*
+
 *RF02 (Controle de Pedidos): O sistema deve permitir a abertura de novas comandas, vinculando cada pedido a um cliente de forma mandatória e registrando a data, hora e o tipo de entrega (Delivery ou Retirada).*
+
 *RF03 (Gestão de Itens e Cardápio): O sistema deve permitir a inclusão de múltiplos produtos num mesmo pedido, distinguindo entre pizzas (com atributos específicos de sabor e tamanho) e bebidas, e registrando o preço de cada item.*
+
 *RF04 (Faturação e Pagamentos): O sistema deve associar estritamente cada pedido finalizado a uma operação de pagamento, calculando o valor total e exigindo a seleção de um método de pagamento a partir de um catálogo padronizado e pré-definido.*
 
 ### 3.2 Requisitos Não Funcionais
 
 *RNF01 (Desempenho): O sistema deve processar e registrar novas inserções na base de dados (novos pedidos) em menos de 3 segundos, assegurando a agilidade necessária para suportar o fluxo de chamadas e mensagens durante os picos de atendimento (ex.: sextas-feiras à noite).*
-a
+
 *RNF02 (Usabilidade): A interface de introdução de dados deve ser intuitiva e de rápida aprendizagem, permitindo que qualquer um dos 6 a 8 funcionários da equipa consiga registrar comandas no sistema sem necessidade de formação técnica extensa.*
 
 *RNF03 (Segurança e Privacidade): O sistema deve garantir a proteção dos dados pessoais armazenados (nome, morada e telefone dos clientes), restringindo a sua extração em massa e garantindo o acesso apenas a utilizadores autorizados no contexto do serviço logístico.*
@@ -64,63 +67,22 @@ a
 
 - **Regras operacionais:**
 *Identidade Obrigatória: Um pedido só pode ser iniciado no sistema se houver um cliente identificado e vinculado (refletido na cardinalidade 1,1 do diagrama).*
+
 *Lastro Financeiro: O processamento da comanda exige um vínculo obrigatório com um registro de pagamento (cardinalidade 1,1 entre Pedido e Pagamento), impedindo que existam pedidos sem prestação de contas no caixa.*
+
 *Meios de Pagamento: A modalidade de acerto só pode ser escolhida a partir do catálogo pré-definido na entidade de domínio "Formas de Pagamentos".*
 
 - **Restrições organizacionais:**
+  
 *Validação Logística: Se o atributo Tipo_Entrega for assinalado como "Delivery", o sistema assume como obrigatório o preenchimento do endereço composto (Rua, Bairro e CEP) do cliente para viabilizar o despacho.*
+
 *Perfil de Operação Enxuta: Dado que a pizzaria opera com uma equipe de 6 a 8 funcionários, o modelo de negócio assume que não há departamentos isolados. O fluxo deve ser contínuo do balcão à cozinha sem depender de aprovações gerenciais em múltiplas etapas.*
 
 ---
 
 ## 5. Dicionário de Dados Conceitual (Preliminar)
 
-**CLIENTE**
-| Atributo | Descrição | Regra de negócio associada |
-|----------|-----------|------------------------------|
-| `@ID_CLIENTE` | Identificador único do cliente no sistema. | Obrigatório (Chave Primária). Valor numérico gerado automaticamente. |
-| `NM_CLIENTE` | Nome completo do consumidor. | Obrigatório (varchar). Utilizado para identificação no balcão e no delivery. |
-| `DS_TELEFONE` | Número de telefone de contacto. | Obrigatório (varchar). Utilizado para histórico e validação. Exemplo fictício: (11) 99999-0000. |
-| `DS_RUA` | Nome da rua para envio da encomenda. | Obrigatório se o atributo `TP_ENTREGA` (no Pedido) for "Delivery". Exemplo fictício: Rua das Flores, 123. |
-| `DS_BAIRRO` | Bairro da morada de entrega. | Obrigatório se a modalidade do pedido for "Delivery". |
-| `CD_CEP` | Código de Endereçamento Postal. | Obrigatório se a modalidade do pedido for "Delivery". Exemplo fictício: 00000-000. |
-
-**PEDIDO**
-| Atributo | Descrição | Regra de negócio associada |
-|----------|-----------|------------------------------|
-| `@ID_PEDIDO` | Identificador único da comanda gerada. | Obrigatório (Chave Primária). Valor numérico. |
-| `DT_PEDIDO` | Data e hora em que a venda foi aberta. | Obrigatório (datetime). Guarda o momento exato da compra. |
-| `TP_ENTREGA` | Classifica a modalidade logística da encomenda. | Obrigatório. Valores restritos a: [Delivery, Retirada]. Se "Delivery", aciona a obrigatoriedade de endereço no Cliente. |
-| `ID_CLIENTE` | Referência ao cliente que realizou a compra. | Obrigatório (Chave Estrangeira). Vínculo mandatório (1,1) para impedir a criação de pedidos anónimos. |
-
-**PIZZA**
-| Atributo | Descrição | Regra de negócio associada |
-|----------|-----------|------------------------------|
-| `@ID_PIZZA` | Identificador exclusivo da pizza no catálogo. | Obrigatório (Chave Primária). Valor numérico. |
-| `DS_SABOR` | Variação de sabor do produto de fabrico próprio. | Obrigatório (varchar). Exemplo: Calabresa, Marguerita. |
-| `TP_TAMANHO` | Dimensão da pizza selecionada. | Obrigatório (varchar). Valores possíveis restritos a: [P, M, G]. |
-| `VL_PRECO` | Preço de venda comercial estipulado. | Obrigatório (numeric). Valor base para a composição do faturamento. |
-
-**BEBIDAS**
-| Atributo | Descrição | Regra de negócio associada |
-|----------|-----------|------------------------------|
-| `@ID_BEBIDA` | Identificador exclusivo da bebida no catálogo. | Obrigatório (Chave Primária). Valor numérico. |
-| `NM_BEBIDA` | Nome comercial do item padronizado de revenda. | Obrigatório (varchar). Exemplo: Refrigerante Cola 2L. |
-| `VL_PRECO` | Preço de venda do produto. | Obrigatório (numeric). |
-
-**PAGAMENTO**
-| Atributo | Descrição | Regra de negócio associada |
-|----------|-----------|------------------------------|
-| `@ID_PAGAMENTO` | Identificador do registo financeiro (faturamento). | Obrigatório (Chave Primária). |
-| `VL_TOTAL` | Montante financeiro total cobrado na operação. | Obrigatório (numeric). O processamento exige o compromisso financeiro atrelado à venda. |
-| `ID_PEDIDO` | Vínculo com a comanda de origem. | Obrigatório (Chave Estrangeira). Relação de 1:1, garantindo o lastro financeiro (não existem pedidos sem prestação de contas). |
-| `ID_FORMA_PGTO`| Referência à modalidade escolhida para o acerto. | Obrigatório (Chave Estrangeira). Deve remeter a um ID válido no catálogo de formas de pagamento. |
-
-**FORMAS_DE_PAGAMENTOS**
-| Atributo | Descrição | Regra de negócio associada |
-|----------|-----------|------------------------------|
-| `@ID_FORMA_PGTO`| Identificador da modalidade no catálogo. | Obrigatório (Chave Primária). |
-| `DS_METODO` | Nome do método transacional padronizado. | Obrigatório (varchar). Impede escrita livre. Exemplos: PIX, Cartão de Crédito, Dinheiro. |
+- Dicionário anexado: [Dicionário de Dados](docs/dicionario-de-dados.html)
 
 ---
 
