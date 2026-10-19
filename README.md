@@ -16,7 +16,8 @@
 - Gabriel Silva Candelo - 48050938
 - Pablo Lorran Ferreira da Silva - 48146978
 - Davi Ramos de Oliveira - 049576216 
-- 
+- John antoni rodrigo quispe - 49450492
+- leon correia da silva - 48036374
 
 ## 1. Caracterização da Organização
 
