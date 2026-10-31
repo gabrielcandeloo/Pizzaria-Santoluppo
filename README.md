@@ -87,17 +87,50 @@
 ## 4. Regras de Negócio
 
 - **Regras operacionais:**
-*Identidade Obrigatória: Um pedido só pode ser iniciado no sistema se houver um cliente identificado e vinculado (refletido na cardinalidade 1,1 do diagrama).*
 
-*Lastro Financeiro: O processamento da comanda exige um vínculo obrigatório com um registro de pagamento (cardinalidade 1,1 entre Pedido e Pagamento), impedindo que existam pedidos sem prestação de contas no caixa.*
+*RN01: O lançamento de produtos no pedido exige a utilização de um código numérico identificador único predefinido no cardápio (ex: 58 para mussarela).*
 
-*Meios de Pagamento: A modalidade de acerto só pode ser escolhida a partir do catálogo pré-definido na entidade de domínio "Formas de Pagamentos".*
+*RN02: O trâmite de cancelamento requer o preenchimento obrigatório do motivo, sendo vedada a devolução automatizada de insumos ao estoque físico.*
 
-- **Restrições organizacionais:**
-  
-*Validação Logística: Se o atributo Tipo_Entrega for assinalado como "Delivery", o sistema assume como obrigatório o preenchimento do endereço composto (Rua, Bairro e CEP) do cliente para viabilizar o despacho.*
+*RN03: O fechamento diário do caixa exige a totalização financeira segmentada estritamente por três métodos de pagamento: dinheiro, PIX e cartões.*
 
-*Perfil de Operação Enxuta: Dado que a pizzaria opera com uma equipe de 6 a 8 funcionários, o modelo de negócio assume que não há departamentos isolados. O fluxo deve ser contínuo do balcão à cozinha sem depender de aprovações gerenciais em múltiplas etapas.*
+*RN04: A organização não executa baixa de estoque por quantidade; o controle de falta de ingredientes se restringe ao indicador de disponibilidade do insumo. Quando um insumo é marcado como indisponível, os produtos que o utilizam são marcados como indisponíveis no cardápio.*
+
+*RN05: O pedido cancelado não é excluído; permanece no histórico com o motivo informado.*
+
+*RN06: Todo pedido possui exatamente um pagamento, com uma única forma escolhida entre dinheiro, PIX e cartão; não existe pagamento dividido.*
+
+*RN07: Quando a forma de pagamento é dinheiro, deve ser registrado se o cliente precisa de troco.*
+
+*RN08: Pedido pago por PIX só é despachado após o recebimento do comprovante.*
+
+*RN09: Se o telefone informado não consta no cadastro, o endereço deve ser confirmado com o cliente antes do despacho.*
+
+*RN10: Quando o motoboy não encontra ninguém no endereço, o pedido recebe a ocorrência "endereço não localizado" e o cliente é contatado; o endereço confirmado é gravado e o anterior é mantido no histórico.*
+
+*RN11: Todo fornecedor cadastrado possui nome, tipo de fornecimento e telefone de contato.*
+
+*RN12: Entregas até 3 km não têm taxa; acima de 3 km, cobra-se R$ 1,00 por km excedente. Pedidos de retirada não têm taxa.*
+
+*RN13: Na pizza meio a meio, o item registra dois sabores e é cobrado o valor do sabor mais caro.*
+
+*RN14: A pizzaria só registra pedidos dentro do horário de funcionamento: terça a quinta e domingo, das 18h às 23h; sexta e sábado, das 18h às 00h; fechada às segundas.*
+
+*RN15: Pedido do tipo entrega exige um endereço de entrega; pedido do tipo retirada não tem endereço.*
+
+*RN16: O endereço de entrega de um pedido deve pertencer ao cliente que fez o pedido.*
+
+- **Restrições organizacionais e legais:**
+
+*Restrição Organizacional 01 (Adequação à LGPD): O armazenamento dos dados de clientes (nome, telefone e endereço) está submetido à Lei Geral de Proteção de Dados (Lei nº 13.709/2018). O banco de dados deve respeitar o princípio da minimização, garantindo que apenas as informações estritamente necessárias para a finalidade de execução da entrega sejam coletadas e processadas, vedando o uso indevido desses registros.*
+
+*Restrição Organizacional 02 (Normas sanitárias): Como serviço de alimentação no município de São Paulo, a pizzaria está sujeita à RDC nº 216/2004 da Anvisa, à Portaria CVS nº 5/2013 do Estado de São Paulo e à regulamentação sanitária municipal. A organização não mantém registros sanitários; por isso o modelo não armazena dados de controle sanitário (temperaturas, validades, lotes).*
+
+*Restrição Organizacional 03 (Documento fiscal): A emissão do documento fiscal é feita por aplicativo disponibilizado pela Receita Federal, externo ao banco de dados. Por ser um processo de terceiros, o modelo não armazena dados fiscais.*
+
+- **Regras prováveis do setor não incluídas:**
+
+*Tempo prometido de entrega: não foi levantado como regra pelo responsável, e o modelo não armazena o horário de saída nem de entrega do pedido.*
 
 ---
 
