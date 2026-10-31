@@ -208,3 +208,24 @@ O modelo de dados foi concebido para refletir a operação enxuta da Pizzaria Sa
 *A estruturação técnica do texto foi mantida pois traduziu perfeitamente o comportamento do fluxograma, do modelo conceitual e dos textos bases construído pelo grupo, com jargões adequados à disciplina.* |
 - **Reflexão crítica** 
 *A alucinação da IA ao tentar adivinhar ao nos tratar como especialistas com anos de experiência serviu como um excelente lembrete de que o texto gerado não pode ser apenas "copiado e colado"  e que causaria obviamente uma enorme confusão e nos tiraria o aprendizado que o projeto proporciona. É necessário ler criticamente e corrigir a máquina para que o documento reflita exatamente a realidade do grupo.* |
+
+---
+
+### | Uso 3 - Correção do README da Entrega 1, análise de inconsistências e instruções para o DER e o dicionário |
+
+- **Ferramenta e etapa**
+*Claude (Anthropic): utilizado na transição para a Entrega 2, na revisão do README corrigido da Entrega 1 (Seções 1, 2, 3, 4, 6, 7 e 8), na comparação com a entrevista, o dicionário de dados e a Issue #26, e na elaboração de instruções para atualizar o DER e o dicionário.*
+- **Motivação**
+*Prazo curto e necessidade de alinhar o README às exigências do esqueleto da Entrega 2 e aos apontamentos do professor, sem perder o que já estava feito.*
+- **Prompt(s) utilizados**
+*"Siga rigorosamente as regras descritas [no esqueleto da Entrega 2] ... Se faltar informações ... me pergunte antes de produzir qualquer coisa"; "Corrija então com base nos dados que você tem do nosso projeto, as seções do README corrigido que você citou"; "Corrija tudo que ficou em aberto, e me instrua a corrigir o dicionário e o DER", seguido das respostas do responsável (dias e volume, taxa de entrega, meio a meio, horário, fornecedores, registros).*
+- **Resposta recebida**
+*A IA apontou contradições entre o README, a entrevista e o dicionário (ex.: P1 com a lógica do endereço invertida, catálogo de produtos separado na Seção 8 e unificado na Seção 6, atributo de disponibilidade ausente no dicionário), reescreveu as seções afetadas e propôs ajustes de modelagem: Fornecedor, Insumo, vínculo Pedido-Endereço, segundo sabor, taxa de entrega.*
+- **Fontes consultadas e verificadas**
+*Issue #26 do professor, esqueleto da Entrega 2, entrevistas, README e dicionário do grupo, e respostas do responsável. A IA localizou na web a RDC nº 216/2004 (Anvisa) e a Portaria CVS nº 5/2013 (SP). `[PREENCHER: o grupo conferiu os dois textos em fonte oficial — indicar a fonte]`*
+- **Trechos rejeitados ou corrigidos**
+*A IA deixou como pendentes os pontos que só o responsável poderia confirmar, em vez de inventar respostas; as pendências foram preenchidas com as respostas dele. A assunção de pagamento único por pedido foi confirmada pelo responsável. A regra de taxa foi redigida como R$ 1,00 por km excedente aos 3 km, interpretação da IA sobre o relato.*
+- **Justificativa da escolha final**
+*As correções foram mantidas porque eliminam contradições que se propagariam para o modelo lógico, a normalização e o script SQL, e porque cada regra ficou ligada a um dado informado pelo responsável.*
+- **Reflexão crítica**
+*A IA só enxerga os arquivos enviados e depende das respostas do responsável: sem elas, parte do levantamento ficaria presa em suposições. A revisão mostrou que texto gerado por IA na Entrega 1 (Gemini) tinha sido aceito sem conferência com a entrevista, o que gerou contradições. Toda saída da IA precisa ser checada contra a realidade da pizzaria.*
