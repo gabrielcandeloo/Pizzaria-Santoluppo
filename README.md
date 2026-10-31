@@ -25,17 +25,38 @@
 ## 2. Processos de Negócio
 
 **Principais processos mapeados:**
-*Gestão de Pedidos (Venda): O fluxo central inicia quando o cliente faz contato via WhatsApp, telefone ou balcão. O atendente identifica o cliente (ou realiza um novo cadastro), anota os itens do pedido com suas especificações (ex: metades, remoção de ingredientes, bordas) e confirma o endereço e a forma de entrega.*
 
-*Produção (Cozinha): A comanda gerada pelo pedido é enviada à área de preparo. A equipe da cozinha utiliza os insumos disponíveis no estoque diário para montar e assar as pizzas conforme as especificações exigidas na venda.*
+*Gestão de Cardápio: Os sabores são organizados em ordem alfabética, cada um com uma numeração própria que nunca se repete (ex: 58 para mussarela). O cadastro de novos produtos e a alteração de preços são feitos em um sistema à parte, onde os itens são classificados em pizzas, brotos, bebidas ou refrigerantes. O cadastro armazena o nome do produto, o valor monetário, a categoria, o código numérico identificador único e o indicador de disponibilidade, usado para retirar o item do cardápio quando falta ingrediente.*
 
-*Logística de Entrega e Retirada: Com o produto finalizado, o pedido é encaminhado para a expedição. Se for delivery, é alocado para a rota de um motoboy; se for retirada, é entregue diretamente ao cliente no balcão.*
+*Fluxo de Pedidos: O atendimento (telefone, WhatsApp ou balcão) é feito por uma pessoa, pois muitos clientes têm dúvidas ou querem alterar ingredientes. Todo pedido é de entrega ou de retirada; não há consumo no salão e, portanto, não há número de mesa. Ao digitar o telefone, o cadastro do cliente aparece; se o telefone mudou, o endereço é confirmado. O pedido associa o cliente, o tipo (entrega ou retirada), o endereço de entrega (rua, número, bairro e CEP) nos pedidos de entrega e, para cada item, o código do produto, a quantidade e a observação para a cozinha. Na pizza meio a meio, o item registra dois sabores e é cobrado o valor do mais caro. Na entrega, a distância até o endereço define a taxa: até 3 km não há cobrança; acima disso, cobra-se R$ 1,00 por km excedente. O código numérico facilita a impressão do pedido. A pizzaria só atende no horário de funcionamento.*
 
-*Fechamento e Pagamento: O pagamento é processado e vinculado ao pedido, seja no balcão (cartão/dinheiro), via motoboy (maquininha na entrega) ou remotamente (PIX), finalizando o ciclo de atendimento ao cliente.*
+*Produção e Expedição: O pedido impresso segue para a cozinha com os itens, as quantidades e as observações. Pronto, é despachado ao motoboy (entrega) ou entregue no balcão (retirada). A pizzaria não mantém registro dos motoboys nem da distribuição dos pedidos entre eles. Se o motoboy não encontra ninguém no endereço, avisa a pizzaria, que contata o cliente para confirmar o novo endereço; o modelo registra essa ocorrência no pedido.*
 
-*Controle de Estoque e Compras (Processo Paralelo): Independentemente das vendas do momento, o volume de ingredientes é monitorado. Quando um insumo atinge o estoque mínimo de segurança, a gestão aciona o processo de compras junto aos fornecedores para reabastecer a pizzaria antes do próximo turno de pico.*
+*Pagamento: A forma de pagamento é perguntada na hora do pedido e anotada. Dinheiro: pergunta-se se o cliente precisa de troco. Pix: envia-se a chave da empresa e o cliente manda o comprovante antes de o motoboy sair. Cartão: o motoboy leva a maquininha. Cada pedido tem uma única forma de pagamento; não existe pagamento dividido. O valor do pagamento é a soma dos itens e da taxa de entrega.*
 
-- [Fluxograma do Banco de Dados (Básico)](docs/feature-readme.jpeg)
+*Cancelamento de Pedidos: A desistência de uma venda exige o registro do identificador do pedido cancelado acompanhado de um atributo de texto livre obrigatório contendo o motivo do cancelamento, sem disparar gatilhos matemáticos de devolução de estoque, já que, na maioria dos casos, o prato ainda não havia sido preparado. O motivo é informado ao iniciar o cancelamento e revisado ao final do expediente; o pedido cancelado permanece no histórico. Quando um pedido sai errado, a pizzaria arca com o prejuízo da troca, e essa troca não é registrada.*
+
+*Fechamento de Caixa: A apuração financeira diária cruza o valor total dos pedidos expedidos e os agrupa de acordo com o dado categórico da forma de pagamento registrada no momento da venda (cartão, dinheiro e PIX). A soma dos três totais é o valor vendido na noite.*
+
+*Cadastro de Fornecedores e Reposição de Insumos: Os fornecedores são poucos e cada um atende uma parte: um conhecido do dono para as caixas de pizza, a Coca-Cola para alguns refrigerantes e a PMG para mercadoria geral (pedida com entrega apenas raramente). A Coca-Cola e a PMG enviam a mercadoria à pizzaria. O cadastro armazena o nome, o tipo de fornecimento (embalagens, bebidas ou mercadoria geral), o telefone de contato e se o fornecedor envia a mercadoria. O dono repõe os ingredientes pessoalmente; quando um insumo acaba, ele é marcado como indisponível e os produtos que o utilizam são retirados do cardápio.*
+
+**Justificativas de processos ausentes:**
+
+*Estoque Físico por quantidade: O abatimento de ingredientes grama a grama não é executado nativamente pela organização, pois o controle é simples: o próprio dono repõe os ingredientes. O trâmite é substituído pela verificação visual do operador, exigindo que o modelo contemple apenas o indicador de disponibilidade do insumo e do produto, sem quantidade em estoque.*
+
+*Pedido de Compra e Recebimento de Mercadoria: A organização não mantém registro de compras nem de recebimento de mercadoria: o dono repõe os ingredientes pessoalmente e a mercadoria enviada pela Coca-Cola e pela PMG não gera registro no sistema. Por isso o modelo inclui o cadastro de FORNECEDOR, mas não as entidades COMPRA e RECEBIMENTO.*
+
+*Cadastro de Motoboys e controle de entregas por entregador: Os motoboys não possuem registros na pizzaria. Por isso o modelo não tem entidade MOTOBOY nem ENTREGA; a logística é representada pelo tipo e pelo status do pedido.*
+
+*Consumo no salão (mesas): A pizzaria atende apenas entrega e retirada, sem consumo no local; por isso o modelo não tem mesa nem comanda de salão.*
+
+*Troca de pedido errado: A troca ocorre e o prejuízo é da pizzaria, mas não é registrada; o modelo não a contempla.*
+
+*Emissão de documento fiscal: É feita por aplicativo disponibilizado pela Receita Federal, externo ao banco de dados; o modelo não armazena dados fiscais.*
+
+*Controle sanitário: A organização não mantém registros sanitários; o modelo não armazena temperaturas, validades ou lotes.*
+
+*Escala de funcionários: Não é gerida no banco de dados e não foi indicada pelo responsável como necessidade de informação do sistema; por isso o modelo não tem entidade FUNCIONARIO.*
 
 ---
 
