@@ -143,42 +143,74 @@
 ## 6. Modelagem Conceitual (Entidades, Atributos, Relacionamentos)
 
 - **Entidades reconhecidas:**
-*Cliente: Armazena os dados dos consumidores. A sua existência no banco é obrigatória para registrar os envolvidos nas transações, manter o histórico de consumo e viabilizar o despacho logístico.*
 
-*Pedido: É a entidade núcleo do modelo. Ela agrupa os dados transacionais de cada venda efetivada, guardando o momento exato da compra e a modalidade de entrega (delivery ou retirada) sem a necessidade de duplicar lógicas de cadastro.*
+*Cliente: Armazena os dados pessoais dos consumidores. A sua existência no banco é obrigatória para manter o histórico de consumo e vincular os despachos logísticos.*
 
-*Pizza e Bebidas: Representam os catálogos independentes de produtos. A segregação em duas entidades se justifica pois as pizzas (de fabricação própria) exigem propriedades distintas (como tamanho e variação de sabor) em relação às bebidas, que são apenas itens padronizados de revenda.*
+*Endereço: Entidade independente criada para resolver o antigo atributo composto do cliente, evitando duplicidade e permitindo o armazenamento de múltiplos locais de entrega e do histórico de endereços de cada cliente.*
 
-*Pagamento: Representa o registro financeiro gerado pela operação comercial.*
+*Pedido: É a entidade núcleo do modelo. Ela agrupa os dados transacionais de cada venda, guardando o momento exato da compra, o tipo (entrega ou retirada), o status de entrega, a distância e a taxa de entrega e a justificativa em casos de cancelamento.*
 
-*Formas de Pagamentos: Entidade de domínio (catálogo). Garante que a escolha do método de pagamento (Pix, Crédito, etc.) seja feita a partir de uma lista padronizada, eliminando erros de digitação livre no sistema.*
+*Produto: Catálogo unificado que consolida todos os itens à venda (pizzas, brotos, bebidas e refrigerantes), diferenciados por categoria.*
+
+*Item_Pedido (Associativa): Entidade de intersecção física que resolve a cardinalidade N:N entre Pedido e Produto, essencial para registrar quantidades específicas, a observação para a cozinha e resguardar o preço histórico praticado no momento da venda, evitando redundância incontrolável. Na pizza meio a meio, relaciona-se uma segunda vez com Produto para registrar o segundo sabor.*
+
+*Pagamento: Representa a consolidação financeira gerada pela operação comercial finalizada.*
+
+*Formas de Pagamentos: Entidade de domínio (catálogo) que restringe os métodos aceitos (Dinheiro, PIX, Cartões) para o fechamento de caixa diário.*
+
+*Fornecedor: Cadastro dos poucos fornecedores da pizzaria (caixas de pizza, refrigerantes e mercadoria geral), com o tipo de fornecimento, o contato e a informação de quem envia mercadoria.*
+
+*Insumo: Cadastro simples dos ingredientes e embalagens, sem controle de quantidade, que permite identificar quais produtos devem sair do cardápio quando um insumo acaba.*
 
 - **Atributos e classificações:**
-*Cliente: Contém o atributo identificador (Chave Primária) Cod_Cliente, os atributos simples Nome e Telefone, e o atributo composto Endereço — o qual desdobra-se nos sub-atributos simples Rua, Bairro e CEP.*
 
-*Pedido: Contém o atributo identificador ID_Pedido e os atributos simples data_hora e Tipo_Entrega.*
+*Cliente: Contém o atributo identificador (Chave Primária) Código, e os atributos simples Nome e Telefone.*
 
-*Pizza: Contém o atributo identificador ID_Pizza e os atributos simples Sabor, Tamanho e Preco.*
+*Endereço: Contém o atributo identificador (Chave Primária) Código, e os atributos simples Rua, Número e Bairro (obrigatórios) e CEP (opcional).*
 
-*Bebidas: Contém o atributo identificador ID_Bebidas e os atributos simples Nome_Bebida e Preco.*
+*Pedido: Contém o atributo identificador Número, e os atributos simples Data_e_Hora, Tipo (entrega ou retirada), Status_Entrega (inclui a ocorrência "endereço não localizado"), Distancia_Km e Taxa_Entrega (somente entrega) e Cancelamento (motivo em texto livre, opcional).*
 
-*Pagamento: Contém o atributo identificador ID_pagamento e o atributo simples valor_total.*
+*Produto: Contém o atributo identificador Código (numérico decorado pela operação), e os atributos simples Sabor (nome comercial), Categoria, Tamanho (opcional), Preço e Disponível (indicador).*
 
-*Formas de Pagamentos: Contém o atributo identificador ID_FormaPagto e o atributo simples Descricao_Metodo.*
+*Item_Pedido: Contém os atributos simples obrigatórios Quantidade e Preço_Unitario, e o atributo opcional Observação.*
+
+*Pagamento: Contém o atributo identificador Código e os atributos simples Valor_Total (itens mais taxa de entrega), Troco_Necessário (somente dinheiro) e Comprovante_Recebido (somente PIX).*
+
+*Formas de Pagamentos: Contém o atributo identificador Código e o atributo simples Descricao_Metodo.*
+
+*Fornecedor: Contém o atributo identificador Código e os atributos simples Nome, Tipo_Fornecimento, Telefone e Envia_Mercadoria (indicador).*
+
+*Insumo: Contém o atributo identificador Código e os atributos simples Nome, Tipo (ingrediente ou embalagem) e Disponível (indicador).*
 
 - **Relacionamentos pertinentes:**
-*Cliente (Faz) Pedido: Estabelece um vínculo 1:N. Cada registro de pedido pertence de modo restrito a um único cliente (1,1), ao passo que um cliente recorrente pode acumular múltiplos pedidos na base histórica (0,n).*
 
-*Pedido (Contém) Pizza / Bebidas: Estabelece vínculos do tipo N:N. Um pedido comercial engloba um ou múltiplos produtos do cardápio, e esses mesmos itens podem figurar em infinitos pedidos distintos (1,n e 0,n).*
+*Cliente (Possui) Endereço: Vínculo 1:N. Um cliente pode cadastrar vários endereços ao longo do tempo (0,n), mas cada endereço registrado pertence àquele cliente (1,1).*
 
-*Pedido (Faz) Pagamento: Estabelece um vínculo estrito 1:1. Cada comanda gera a obrigatoriedade de acoplamento com exatamente uma operação de pagamento financeiro.*
+*Cliente (Faz) Pedido: Vínculo 1:N. Cada registro de pedido pertence estritamente a um único cliente (1,1), enquanto um cliente recorrente acumula múltiplos pedidos (0,n).*
 
-*Pagamento (Decisão) Formas de Pagamentos: Associa o montante faturado à modalidade transacional selecionada pelo consumidor, extraída do catálogo.*
+*Pedido (Entrega em) Endereço: Vínculo 1:N. Um pedido de entrega é despachado para exatamente um endereço e um pedido de retirada não tem endereço (0,1); um endereço pode receber vários pedidos (0,n). Esse vínculo permite saber para onde cada pedido foi e medir as entregas frustradas por endereço desatualizado (P1).*
+
+*Pedido (Contém) Produto: Vínculo N:N gerador da entidade associativa Item_Pedido. Um pedido engloba um ou mais produtos (1,n), e um produto figura em vários pedidos (0,n), exigindo o registro da quantidade, do valor unitário e da observação daquela transação.*
+
+*Item_Pedido (Segundo Sabor) Produto: Vínculo N:1 opcional. Um item de pizza meio a meio aponta para um segundo produto (0,1); um produto pode ser segundo sabor em vários itens (0,n).*
+
+*Pedido (Gera) Pagamento: Vínculo 1:1. Cada pedido gera o acoplamento obrigatório com uma operação de pagamento financeiro (1,1).*
+
+*Pagamento (É quitado por) Formas de Pagamentos: Vínculo N:1. Cada pagamento possui exatamente uma forma (1,1), registrada na hora do pedido, e uma forma quita vários pagamentos (0,n).*
+
+*Fornecedor (Fornece) Insumo: Vínculo 1:N. Um fornecedor pode atender vários insumos (0,n) e cada insumo tem no máximo um fornecedor habitual (0,1), pois a reposição pode ocorrer fora dos fornecedores cadastrados.*
+
+*Insumo (Compõe) Produto: Vínculo N:N. Um insumo pode ser usado em vários produtos (0,n) e um produto pode usar vários insumos (0,n); produtos como refrigerantes podem não ter insumos registrados.*
 
 - **Restrições e políticas organizacionais aplicadas ao modelo:**
-*Identidade Exigida: O sistema impede o lançamento de pedidos anônimos. A restrição de cardinalidade (1,1) entre Pedido e Cliente determina que não se processa uma venda sem a prévia identificação do indivíduo.*
 
-*Lastro Financeiro: O processamento final exige o compromisso financeiro. A cardinalidade mandatória (1,1) na relação Pedido-Pagamento restringe o banco de dados de acomodar vendas "órfãs", exigindo que a entrada do pedido dispare um evento de valor associado na camada de faturamento.*
+*Identidade Exigida (LGPD): O sistema não processa pedidos anônimos. A restrição de cardinalidade (1,1) entre Pedido e Cliente força a identificação, mas o armazenamento de Nome e Telefone é estritamente limitado à finalidade logística de execução do delivery, submetido ao princípio da minimização.*
+
+*Controle de Estoque Visual: A organização não executa abatimento automatizado de estoque por quantidade. A falta de insumos é tratada mediante a marcação manual do insumo e dos produtos afetados como indisponíveis, dispensando gatilhos matemáticos no banco.*
+
+*Lastro Financeiro: O processamento final exige compromisso financeiro. A cardinalidade mandatória (1,1) impede que o banco acomode vendas concluídas "órfãs" de faturamento.*
+
+*Pagamento Único: Cada pedido é quitado por uma única forma de pagamento; não existe pagamento dividido.*
 
 ---
 
