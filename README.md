@@ -85,23 +85,33 @@
 
 ### 3.1 Requisitos Funcionais
 
-*RF01 (Gestão de Clientes): O sistema deve permitir o registro, atualização e consulta dos dados dos clientes, armazenando obrigatoriamente o nome, telefone e o endereço desdobrado em rua, bairro e código postal (CEP).*
+*RF01: O sistema deve permitir o cadastro de itens do cardápio com nome, valor, categoria (pizza, broto, bebida ou refrigerante), tamanho (quando houver), indicador de disponibilidade e um código numérico único.*
 
-*RF02 (Controle de Pedidos): O sistema deve permitir a abertura de novas comandas, vinculando cada pedido a um cliente de forma mandatória e registrando a data, hora e o tipo de entrega (Delivery ou Retirada).*
+*RF02: O sistema deve registrar pedidos vinculando o cliente (nome e telefone), o tipo do pedido (entrega ou retirada), o endereço de entrega (rua, número, bairro e CEP, quando informado) nos pedidos de entrega e, para cada item, o código do produto, a quantidade e a observação para a cozinha.*
 
-*RF03 (Gestão de Itens e Cardápio): O sistema deve permitir a inclusão de múltiplos produtos num mesmo pedido, distinguindo entre pizzas (com atributos específicos de sabor e tamanho) e bebidas, e registrando o preço de cada item.*
+*RF03: O sistema deve registrar o cancelamento de pedidos vinculando o ID do pedido a um atributo de texto livre obrigatório com o motivo da desistência, sem disparar gatilhos de devolução de estoque.*
 
-*RF04 (Faturação e Pagamentos): O sistema deve associar estritamente cada pedido finalizado a uma operação de pagamento, calculando o valor total e exigindo a seleção de um método de pagamento a partir de um catálogo padronizado e pré-definido.*
+*RF04: O sistema deve realizar o fechamento financeiro do caixa somando os valores totais filtrados pelo dado categórico da forma de pagamento (dinheiro, PIX, cartões).*
+
+*RF05: O sistema deve registrar, para cada pedido, uma única forma de pagamento (dinheiro, PIX ou cartão) e o valor total (itens mais taxa de entrega); quando for dinheiro, se o cliente precisa de troco; quando for PIX, se o comprovante foi recebido antes da saída do motoboy.*
+
+*RF06: O sistema deve permitir registrar no pedido a ocorrência de endereço não localizado (entrega frustrada) e cadastrar o novo endereço confirmado do cliente (rua, número, bairro e CEP), mantendo o endereço anterior no histórico.*
+
+*RF07: O sistema deve permitir cadastrar fornecedores com nome, tipo de fornecimento (embalagens, bebidas ou mercadoria geral), telefone de contato e indicador de envio de mercadoria.*
+
+*RF08: O sistema deve permitir cadastrar insumos (ingredientes e embalagens) com nome, tipo, indicador de disponibilidade, os produtos do cardápio que os utilizam e, quando houver, o fornecedor; ao marcar um insumo como indisponível, o sistema deve listar os produtos afetados para que sejam marcados como indisponíveis no cardápio.*
+
+*RF09: O sistema deve registrar, nos pedidos de entrega, a distância em km e a taxa de entrega (sem cobrança até 3 km; R$ 1,00 por km excedente) e, nos itens de pizza meio a meio, o segundo sabor, cobrando o valor do sabor mais caro.*
 
 ### 3.2 Requisitos Não Funcionais
 
-*RNF01 (Desempenho): O sistema deve processar e registrar novas inserções na base de dados (novos pedidos) em menos de 3 segundos, assegurando a agilidade necessária para suportar o fluxo de chamadas e mensagens durante os picos de atendimento (ex.: sextas-feiras à noite).*
+*RNF01 (Desempenho/Usabilidade): O sistema deve processar a busca e inserção rápida de itens no pedido exclusivamente através do código numérico decorado.*
 
-*RNF02 (Usabilidade): A interface de introdução de dados deve ser intuitiva e de rápida aprendizagem, permitindo que qualquer um dos 6 a 8 funcionários da equipa consiga registrar comandas no sistema sem necessidade de formação técnica extensa.*
+*RNF02 (Disponibilidade): O banco de dados deve operar de forma contínua e local durante o horário de expediente para não interromper a expedição em caso de queda de rede externa.*
 
-*RNF03 (Segurança e Privacidade): O sistema deve garantir a proteção dos dados pessoais armazenados (nome, morada e telefone dos clientes), restringindo a sua extração em massa e garantindo o acesso apenas a utilizadores autorizados no contexto do serviço logístico.*
+*RNF03 (Segurança): O sistema deve restringir a exclusão de pedidos e o acesso ao preenchimento de justificativas de cancelamento apenas a operadores autorizados, protegendo o histórico financeiro diário.*
 
-*(RNF04 (Disponibilidade): A arquitetura da base de dados deve ser fiável e manter a integridade transacional das comandas, impedindo a perda de registros de pedidos ativos ou pagamentos em caso de falhas temporárias de energia ou de rede.)*
+*RNF04 (Confiabilidade): O banco de dados deve garantir as propriedades ACID (Atomicidade, Consistência, Isolamento e Durabilidade) para manter a integridade transacional, impedindo que dados de itens consumidos e pagamentos sejam perdidos ou corrompidos em caso de falha repentina de energia no balcão.*
 
 ---
 
@@ -237,7 +247,7 @@
 
 ## 7. Diagrama Entidade-Relacionamento (DER)
 
-Diagrama revisado (notação brModelo, criado no brModelo Web): [DER revisado](docs/DER-PIZZARIA-revisado.jpg)
+Diagrama revisado (notação brModelo, criado no brModelo Web): [DER revisado](docs/DER-PIZZARIA-revisado.png)
 
 Versão da Entrega 1 (histórico): [Diagrama Entidade-Relacionamento](docs/DER-PIZZARIA_page-0001.jpg)
 
@@ -257,6 +267,7 @@ O modelo de dados foi concebido para refletir a operação enxuta da Pizzaria Sa
 *   **Lastro Financeiro Estrito (Pedido 1:1 Pagamento):** Optou-se por uma relação estrita de 1:1 entre a venda e o faturamento. Dada a realidade de uma equipe reduzida (cerca de 6 colaboradores), o modelo assegura um fechamento de caixa sem dependências de aprovações gerenciais complexas, impedindo a existência de comandas "órfãs" sem prestação de contas.
 *   **Conversão de Processos em Atributos:** Com base na terceira forma normal e na revisão arquitetural, evitou-se o erro de transformar etapas operacionais (verbos) em tabelas isoladas. A logística foi abstraída para os atributos `TP_PEDIDO` (entrega ou retirada) e `DS_ENTREGA` (status, incluindo "endereço não localizado") dentro da entidade núcleo `PEDIDO`, centralizando a transação sem poluir o Diagrama Entidade-Relacionamento. Pela mesma razão não há entidade de motoboy, que a pizzaria não registra.
 *   **Fornecedor e Insumo sem Controle de Quantidade:** Os fornecedores são poucos e o dono repõe os ingredientes, sem baixa por gramatura. Por isso `INSUMO` guarda apenas o indicador de disponibilidade e o vínculo com os produtos que o utilizam, e `FORNECEDOR` guarda o contato, o tipo de fornecimento e se envia mercadoria. As entidades de compra e recebimento ficaram de fora porque a organização não registra esses processos (ver Seção 2).
+
 ---
 
 ## 9. Uso de Inteligência Artificial
