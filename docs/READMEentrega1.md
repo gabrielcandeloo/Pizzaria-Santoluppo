@@ -247,7 +247,7 @@
 
 ## 7. Diagrama Entidade-Relacionamento (DER)
 
-Diagrama revisado (notação brModelo, criado no brModelo Web): [DER revisado](docs/DER-PIZZARIA-revisado.png)
+Diagrama revisado (notação brModelo, criado no brModelo Web): [DER revisado](docs/DER-PIZZARIA-revisado.jpeg)
 
 Versão da Entrega 1 (histórico): [Diagrama Entidade-Relacionamento](docs/DER-PIZZARIA_page-0001.jpg)
 
