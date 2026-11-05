@@ -15,10 +15,31 @@
 ## 1. Caracterização da Organização
 
 - **Pizzaria Santoluppo:**
-- **Contexto e porte:** *Uma empresa com fins lucrativos do ramo alimentício, com uma operação envolvendo aproximadamente 6 colaboradores, com um volume de 25 pedidos por dia.*
-- **Problemas e necessidades identificados:** *Um ponto a mencionar é a ausência de um fornecedor, os funcionários repõem o estaque mediante a falta de determinado item, realizando compras em um estabelecimento próximo. Para a realização da entrega ao cliente, o entregador verificar o número de telefone se for o mesmo não houve alteração no endereço, mas se o número de telefone for mudado há a possiblidade da entregar ser realizada no local errado.*
-- **Justificativa da escolha:** *A escolha se deu pelo fácil acesso a toda estrutura necessária para o projeto, desde acesso ao local até a quantidade real de dados que são coletados diariamente*
-- **Evidências da organização:** *Redes Sociais: Instagram https://www.instagram.com/santoluppopizzaria/ - Endereço: Av. Sapopemba 1333 Vila Reg. Feijó CEP:03345-001 - Contato: Telefone(11) 2028-8486 - WhatsApp (11) 995585599 - Fotos no local: [Frente da Pizzaria](docs/Pizzaria-Frente.jpeg) - [Membros presentes: Pablo Lorran, Davi Ramos, Leon Correia e John Antoni](docs/membros-entrevista.jpeg)*
+- **Contexto e porte:** *Uma empresa com fins lucrativos do ramo alimentício, com uma operação envolvendo aproximadamente 6 colaboradores, volume médio de 150 pedidos por semana (cerca de 25 por dia) e 3 fornecedores recorrentes (caixas de pizza, refrigerantes e mercadoria geral). Funciona de terça a domingo, a partir das 18h: até 23h de terça a quinta e aos domingos, e até 00h às sextas e sábados; fecha às segundas. Os pedidos chegam por telefone, WhatsApp e balcão e saem por entrega (motoboy) ou retirada; não há consumo no salão.*
+- **Problemas e necessidades identificados:**
+
+- *P1 - Endereço desatualizado e entrega frustrada: ao digitar o telefone, o sistema exibe o cadastro do cliente. Se o telefone mudou, o endereço é confirmado na hora; porém, se apenas o endereço mudou e o cliente não avisou, o pedido é despachado ao endereço antigo. O motoboy não encontra ninguém, avisa a pizzaria e só então o cliente é contatado para confirmar o novo endereço. O modelo precisa registrar essa ocorrência no pedido e manter o histórico de endereços do cliente, para medir quantas entregas falham por endereço desatualizado.*
+
+- *P2 - Desintegração de Cardápio e Pedidos: O cadastro de novos produtos e alterações de preços são feitos em um sistema à parte. Isso força a operação a usar códigos numéricos decorados ou tabelas externas (como o código 58 para mussarela) na hora de lançar o pedido, gerando risco de divergência entre o cardápio cadastrado e os códigos e preços lançados no pedido.*
+
+- *P3 - Fechamento de Caixa Fragmentado: A apuração financeira no fim do expediente exige a soma manual de três fontes distintas (cartões, dinheiro e PIX), retardando a consolidação diária das vendas*
+
+- *P4 - Rastreabilidade de Cancelamentos: Embora os motivos de cancelamento sejam anotados, a falta de uma entidade centralizadora impede o arquivamento automático do histórico e a geração ágil de indicadores sem que isso afete o controle de pratos finalizados*
+
+- *P5 - Fornecedores sem cadastro de contato e fornecimento: os fornecedores são poucos e cada um atende uma parte (caixas de pizza, refrigerantes da Coca-Cola e mercadoria geral da PMG), e a Coca-Cola e a PMG enviam a mercadoria à pizzaria. O contato, o tipo de fornecimento e a informação de quem envia mercadoria não ficam registrados no banco, o que dificulta saber a quem recorrer para repor cada tipo de item.*
+
+- **Justificativa da escolha:** *A escolha se deu pelo fácil acesso a toda estrutura necessária para o projeto, desde acesso ao local até a quantidade real de dados que são coletados diariamente. Além da visível melhora que um banco de dados com todos os setores unificados pode trazer para a organização.*
+- **Evidências da organização:** 
+
+- *Redes Sociais: [Instagram](https://www.instagram.com/santoluppopizzaria/)* 
+
+- *Endereço: Av. Sapopemba 1333 Vila Reg. Feijó CEP: 03345-001 - Contato: Telefone(11) 2028-8486 - WhatsApp (11) 995585599*
+
+- *Fotos no local: [Frente da Pizzaria](docs/Pizzaria-Frente.jpeg)*
+
+- *Membros presentes: [Pablo Lorran, Davi Ramos, Leon Correia e John Antoni](docs/membros-entrevista.jpeg)*
+
+- *Empresa no Google Maps: [Pizzaria Santoluppo](https://maps.app.goo.gl/FwuzXXwQoKZwRVKD6)*
 
 ---
 
