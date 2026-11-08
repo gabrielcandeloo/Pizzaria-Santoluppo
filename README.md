@@ -454,8 +454,8 @@ A massa de dados está no próprio [script](docs/script.sql), na seção 4. É *
 ## 5. Repositório GitHub
 
 - Relatório: este `README.md`
-- Levantamento: [levantamento/levantamento.md](levantamento/levantamento.md)
-- DER conceitual: [docs/DER-PIZZARIA-revisado.jpeg](docs/DER-PIZZARIA-revisado_page-0001.jpg)
+- Levantamento: [levantamento/levantamento.md](docs/levantamento.md)
+- DER conceitual: [docs/DER-PIZZARIA-revisado](docs/DER-PIZZARIA-revisado_page-0001.jpg)
 - Dicionário de dados: [docs/dicionario-de-dados.html](docs/dicionario-de-dados.html)
 - README da Entrega 1 (histórico): [docs/READMEentrega1.md](docs/READMEentrega1.md)
 
