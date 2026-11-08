@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dicionário de Dados Conceitual — Pizzaria Santoluppo</title>
+<style>
+  :root {
+    --text: #1a1a1a;
+    --muted: #5a5a5a;
+    --line: #bdbdbd;
+    --head: #e9e9e9;
+    --code-bg: #f4f4f4;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 40px 20px 80px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text);
+    background: #fff;
+  }
+  main { max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 1.6rem; margin: 0 0 4px; }
+  .subtitle { color: var(--muted); margin: 0 0 32px; }
+  h2 { font-size: 1.25rem; margin: 40px 0 12px; border-bottom: 1px solid var(--line); padding-bottom: 4px; }
+  h3 { font-size: 1.05rem; margin: 32px 0 8px; }
+  p { margin: 0 0 12px; }
+  code {
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 0.88em;
+    background: var(--code-bg);
+    padding: 1px 4px;
+    border-radius: 2px;
+  }
+  pre.notation {
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 0.88rem;
+    background: var(--code-bg);
+    border: 1px solid var(--line);
+    padding: 10px 12px;
+    margin: 0 0 12px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .table-wrap { overflow-x: auto; margin: 0 0 14px; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+  th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--head); }
+  table.dict col.c1 { width: 27%; }
+  table.dict col.c2 { width: 36%; }
+  table.dict col.c3 { width: 37%; }
+  td .attr { font-weight: bold; }
+  td .meta { display: block; color: var(--muted); font-size: 0.8rem; margin-top: 2px; }
+  .idx { margin-bottom: 8px; }
+  @media print {
+    body { padding: 0; }
+    h3 { page-break-after: avoid; }
+    table { page-break-inside: auto; }
+    tr { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Dicionário de Dados Conceitual (Preliminar)</h1>
+<p class="subtitle">Pizzaria Santoluppo</p>
+
+<h2>1. Modelo conceitual</h2>
+<p>Este modelo representa uma pizzaria que opera exclusivamente via delivery e retiradas no balcão. Cada cliente é identificado no sistema, possui endereços cadastrados para despacho, e realiza pedidos vinculados aos produtos do cardápio mediante a inserção de códigos numéricos. Ao final, o acerto financeiro é registrado com a segmentação da forma de pagamento.</p>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Entidade</th><th>Relaciona-se com</th><th>Cardinalidade</th></tr></thead>
+  <tbody>
+    <tr><td>CLIENTE</td><td>ENDERECO (Possui)</td><td>1:N — um cliente pode possuir múltiplos endereços cadastrados ao longo do tempo (ex: casa, trabalho).</td></tr>
+    <tr><td>CLIENTE</td><td>PEDIDO (Faz)</td><td>1:N — um cliente realiza vários pedidos; cada pedido pertence estritamente a um único cliente.</td></tr>
+    <tr><td>PEDIDO</td><td>PRODUTO (Contém)</td><td>N:N — um pedido agrupa vários produtos; um produto é listado em vários pedidos. Esse relacionamento dá origem à entidade associativa física ITEM_PEDIDO, portadora de quantidade e preço.</td></tr>
+    <tr><td>PEDIDO</td><td>PAGAMENTO (Gera)</td><td>1:1 — um pedido finalizado gera a consolidação de um montante total a ser pago.</td></tr>
+    <tr><td>PAGAMENTO</td><td>FORMAS_PAGAMENTOS (Decisão)</td><td>N:N — um pagamento pode ser dividido em mais de uma forma (ex: metade dinheiro, metade PIX), e uma forma quita múltiplos pagamentos diários.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Neste modelo conceitual, o relacionamento N:N "Contém" entre PEDIDO e PRODUTO foi destacado com atributos próprios de quantidade e preço unitário, caracterizando uma entidade associativa implícita que garantirá o histórico financeiro na modelagem lógica.</p>
+
+<p><b>Cliente</b> é o consumidor final, identificado unicamente no sistema para garantir o direcionamento da entrega.</p>
+<p><b>Endereço</b> é o local geográfico exato associado ao cliente para o despacho da mercadoria.</p>
+<p><b>Pedido</b> é a transação central, que agrupa os itens solicitados, o status de entrega e possíveis cancelamentos.</p>
+<p><b>Produto</b> é o item do cardápio unificado (pizzas, brotos e bebidas), identificado por um código numérico memorizado pela operação.</p>
+<p><b>Pagamento</b> é a consolidação monetária gerada ao final da elaboração do pedido.</p>
+<p><b>Formas de Pagamento</b> é a segmentação categórica (Dinheiro, PIX, Cartões) exigida para o fechamento diário do caixa.</p>
+
+<h2>2. Fluxo de dados (visão de DFD)</h2>
+<p>Cliente aciona a pizzaria → é consultado ou cadastrado em CLIENTE e seu ENDERECO é confirmado → o operador abre um PEDIDO associado ao cliente → os itens solicitados são inseridos de forma ágil utilizando o código do PRODUTO, registrando a quantidade e valor (ITEM_PEDIDO) → o pedido é encaminhado para a produção → caso ocorra desistência antes do preparo, a justificativa é gravada no atributo de cancelamento do pedido sem afetar o estoque → ao final, o total devido gera um PAGAMENTO vinculado às FORMAS_PAGAMENTOS utilizadas, viabilizando o fechamento do caixa no fim do expediente → os dados pessoais mantêm conformidade com a LGPD (§6).</p>
+
+<h2>3. Convenções do dicionário</h2>
+<p><b>SGBD:</b> MySQL 8, mecanismo de armazenamento InnoDB — cuida da persistência dos arquivos de dados, do log de transações e mantém o índice primário.</p>
+<p><b>Codificação de caracteres:</b> utf8mb4 com collation utf8mb4_0900_ai_ci. Escolhida por cobrir acentuação do português sem perda em campos textuais.</p>
+<p><b>Notação formal</b> (símbolos usados neste dicionário):</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Símbolo</th><th>Significado</th></tr></thead>
+  <tbody>
+    <tr><td><code>=</code></td><td>é composto de</td></tr>
+    <tr><td><code>+</code></td><td>e (conecta elementos obrigatórios)</td></tr>
+    <tr><td><code>( )</code></td><td>opcional</td></tr>
+    <tr><td><code>[ | ]</code></td><td>escolha obrigatória entre alternativas</td></tr>
+    <tr><td><code>@</code></td><td>identificador (chave primária)</td></tr>
+  </tbody>
+</table>
+</div>
+<p><b>Prefixos:</b> NM_ nome, DT_ data, ID_ identificador (não sofre operação matemática), CD_ código de domínio, QT_ quantidade, TP_ tipo (categorização), IN_ indicador booleano, VL_ valor monetário, DS_ descrição/texto livre.</p>
+<p><b>Versão deste dicionário:</b> v1.0, Outubro de 2026. Atende ao princípio de rastreabilidade exigido pela LGPD.</p>
+
+<h2>4. Dicionário de dados por entidade</h2>
+<p>Cada atributo aparece com o nome padronizado lógico, o nome original utilizado no diagrama visual, a proposta de tipagem física e a marcação de chave primária (PK).</p>
+
+<!-- CLIENTE -->
+<h3>CLIENTE</h3>
+<pre class="notation">CLIENTE = @ID_CLIENTE + NM_CLIENTE + DS_TELEFONE</pre>
+<p><b>Leitura:</b> @ID_CLIENTE é o identificador único; os dois campos seguintes são obrigatórios e conectados por +. Entidade detentora de dados sensíveis (PII).</p>
+<div class="table-wrap">
+<table class="dict">
+  <colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup>
+  <thead><tr><th>Atributo</th><th>Descrição</th><th>Regra de negócio associada</th></tr></thead>
+  <tbody>
+    <tr><td><span class="attr">ID_CLIENTE</span><span class="meta">Código · integer · PK</span></td><td>Identificador sistêmico do cliente.</td><td>Obrigatório; gerado pelo sistema.</td></tr>
+    <tr><td><span class="attr">NM_CLIENTE</span><span class="meta">Nome · varchar(120)</span></td><td>Nome do consumidor final.</td><td>Obrigatório para identificação nominal do despacho.</td></tr>
+    <tr><td><span class="attr">DS_TELEFONE</span><span class="meta">Telefone · varchar(15)</span></td><td>Número de contato com DDD.</td><td>Obrigatório; canal de comunicação em caso de problemas com o delivery.</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="idx"><b>Índices:</b> PK ID_CLIENTE (clusterizado); índice em DS_TELEFONE (busca rápida no atendimento).</p>
+
+<!-- ENDERECO -->
+<h3>ENDERECO</h3>
+<pre class="notation">ENDERECO = @ID_ENDERECO + DS_RUA + NM_BAIRRO + (CD_CEP)</pre>
+<p><b>Leitura:</b> @ID_ENDERECO é o identificador; DS_RUA e NM_BAIRRO são obrigatórios, enquanto CD_CEP é classificado como opcional ( ) para não travar o cadastro caso o cliente não o saiba decorado.</p>
+<div class="table-wrap">
+<table class="dict">
+  <colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup>
+  <thead><tr><th>Atributo</th><th>Descrição</th><th>Regra de negócio associada</th></tr></thead>
+  <tbody>
+    <tr><td><span class="attr">ID_ENDERECO</span><span class="meta">Código (implícito) · integer · PK</span></td><td>Identificador do local de entrega.</td><td>Obrigatório; gerado pelo sistema.</td></tr>
+    <tr><td><span class="attr">DS_RUA</span><span class="meta">Rua · varchar(150)</span></td><td>Logradouro e número da residência.</td><td>Obrigatório para viabilizar a entrega física.</td></tr>
+    <tr><td><span class="attr">NM_BAIRRO</span><span class="meta">Bairro · varchar(80)</span></td><td>Bairro da entrega.</td><td>Obrigatório; utilizado para possível roteirização do entregador.</td></tr>
+    <tr><td><span class="attr">CD_CEP</span><span class="meta">CEP · varchar(8)</span></td><td>Código Postal.</td><td>Opcional; gravado apenas com números.</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="idx"><b>Índices:</b> PK ID_ENDERECO.</p>
+
+<!-- PEDIDO -->
+<h3>PEDIDO</h3>
+<pre class="notation">PEDIDO = @ID_PEDIDO + DT_HORA + DS_ENTREGA + (DS_CANCELAMENTO)</pre>
+<p><b>Leitura:</b> (DS_CANCELAMENTO) é opcional porque um pedido só receberá este preenchimento caso a transação seja interrompida antes da produção.</p>
+<div class="table-wrap">
+<table class="dict">
+  <colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup>
+  <thead><tr><th>Atributo</th><th>Descrição</th><th>Regra de negócio associada</th></tr></thead>
+  <tbody>
+    <tr><td><span class="attr">ID_PEDIDO</span><span class="meta">Número · integer · PK</span></td><td>Número sequencial do pedido.</td><td>Obrigatório.</td></tr>
+    <tr><td><span class="attr">DT_HORA</span><span class="meta">Data e Hora · datetime</span></td><td>Registro temporal de abertura.</td><td>Obrigatório; gerado automaticamente pelo sistema.</td></tr>
+    <tr><td><span class="attr">DS_ENTREGA</span><span class="meta">Entrega · varchar(30)</span></td><td>Status do andamento logístico.</td><td>Obrigatório.</td></tr>
+    <tr><td><span class="attr">DS_CANCELAMENTO</span><span class="meta">Cancelamento (0, 1) · varchar(255)</span></td><td>Motivo da desistência.</td><td>Opcional. É um texto livre; o preenchimento não engatilha devolução de estoque automático.</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="idx"><b>Índices:</b> PK ID_PEDIDO; índice temporal em DT_HORA.</p>
+
+<!-- ITEM_PEDIDO (Relacionamento Contém) -->
+<h3>ITEM_PEDIDO (Relacionamento Associativo "Contém")</h3>
+<pre class="notation">ITEM_PEDIDO = QT_ITEM + VL_UNITARIO</pre>
+<p><b>Leitura:</b> Retrata a intersecção física resultante do relacionamento N:N entre pedido e produto.</p>
+<div class="table-wrap">
+<table class="dict">
+  <colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup>
+  <thead><tr><th>Atributo</th><th>Descrição</th><th>Regra de negócio associada</th></tr></thead>
+  <tbody>
+    <tr><td><span class="attr">QT_ITEM</span><span class="meta">Quantidade · integer</span></td><td>Volume solicitado do mesmo produto.</td><td>Obrigatório; inteiro maior que zero.</td></tr>
+    <tr><td><span class="attr">VL_UNITARIO</span><span class="meta">Preço Unitario · decimal(10,2)</span></td><td>Preço cobrado no momento da venda.</td><td>Obrigatório. Resguarda o histórico financeiro do caixa caso o valor base do cardápio seja alterado no futuro.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- PRODUTO -->
+<h3>PRODUTO</h3>
+<pre class="notation">PRODUTO = @CD_PRODUTO + NM_SABOR + [TP_PIZZA | TP_BROTO | TP_BEBIDA | TP_REFRIGERANTE] + (DS_TAMANHO) + VL_PRECO</pre>
+<p><b>Leitura:</b> @CD_PRODUTO é chave primária, mas usa CD_ pois faz referência a um domínio memorizado pela operação (ex: 58 = mussarela). DS_TAMANHO é opcional (bebidas podem não ter tamanho mapeado).</p>
+<div class="table-wrap">
+<table class="dict">
+  <colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup>
+  <thead><tr><th>Atributo</th><th>Descrição</th><th>Regra de negócio associada</th></tr></thead>
+  <tbody>
+    <tr><td><span class="attr">CD_PRODUTO</span><span class="meta">Código · integer · PK</span></td><td>Identificador numérico do cardápio.</td><td>Obrigatório e único. Utilizado nativamente pelos operadores para inserir itens rapidamente.</td></tr>
+    <tr><td><span class="attr">NM_SABOR</span><span class="meta">Sabor · varchar(100)</span></td><td>Nome comercial do item.</td><td>Obrigatório.</td></tr>
+    <tr><td><span class="attr">TP_CATEGORIA</span><span class="meta">Categoria · varchar(20)</span></td><td>Classificação da natureza do produto.</td><td>Obrigatório. Alternativas estritas: pizza, broto, bebida, refrigerante.</td></tr>
+    <tr><td><span class="attr">DS_TAMANHO</span><span class="meta">Tamanho · varchar(15)</span></td><td>Proporção do item (P, M, G).</td><td>Opcional.</td></tr>
+    <tr><td><span class="attr">VL_PRECO</span><span class="meta">Preço · decimal(10,2)</span></td><td>Valor tabelado atual do produto.</td><td>Obrigatório; alimenta o item do pedido.</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="idx"><b>Índices:</b> PK CD_PRODUTO.</p>
+
+<!-- PAGAMENTO -->
+<h3>PAGAMENTO</h3>
+<pre class="notation">PAGAMENTO = @ID_PAGAMENTO + VL_TOTAL</pre>
+<div class="table-wrap">
+<table class="dict">
+  <colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup>
+  <thead><tr><th>Atributo</th><th>Descrição</th><th>Regra de negócio associada</th></tr></thead>
+  <tbody>
+    <tr><td><span class="attr">ID_PAGAMENTO</span><span class="meta">Código · integer · PK</span></td><td>Identificador do repasse financeiro.</td><td>Obrigatório.</td></tr>
+    <tr><td><span class="attr">VL_TOTAL</span><span class="meta">valor_total · decimal(10,2)</span></td><td>Montante quitado.</td><td>Obrigatório; consolidado a partir dos itens do pedido.</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="idx"><b>Índices:</b> PK ID_PAGAMENTO.</p>
+
+<!-- FORMAS_PAGAMENTOS -->
+<h3>FORMAS_PAGAMENTOS</h3>
+<pre class="notation">FORMAS_PAGAMENTOS = @ID_FORMA + [TP_DINHEIRO | TP_PIX | TP_CARTAO]</pre>
+<div class="table-wrap">
+<table class="dict">
+  <colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup>
+  <thead><tr><th>Atributo</th><th>Descrição</th><th>Regra de negócio associada</th></tr></thead>
+  <tbody>
+    <tr><td><span class="attr">ID_FORMA</span><span class="meta">Código · integer · PK</span></td><td>ID do método aceito.</td><td>Obrigatório.</td></tr>
+    <tr><td><span class="attr">TP_METODO</span><span class="meta">Descricao_Metodo · varchar(30)</span></td><td>Rótulo da forma de quitação.</td><td>Obrigatório. Limitado às três vias de soma que a pizzaria utiliza (Dinheiro, PIX, Cartões).</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="idx"><b>Índices:</b> PK ID_FORMA.</p>
+
+<h2>5. Conformidade com a LGPD e Log Administrativo</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Tabela</th><th>Dados Sensíveis (PII)</th><th>Tratamento (LGPD)</th><th>Retenção e Descarte</th></tr></thead>
+  <tbody>
+    <tr><td>CLIENTE</td><td>Nome, Telefone</td><td>Obrigatório para execução contratual do delivery.</td><td>Anonimização nominal após inatividade prolongada.</td></tr>
+    <tr><td>ENDERECO</td><td>Rua, Bairro, CEP</td><td>Indispensável para viabilidade logística.</td><td>Desvinculado nominalmente na deleção da conta.</td></tr>
+    <tr><td>PEDIDO/PAGTO</td><td>Nenhum direto</td><td>Histórico de consumo vinculado indiretamente.</td><td>Preservado integralmente por motivos fiscais.</td></tr>
+  </tbody>
+</table>
+</div>
+<p>As entidades CLIENTE e ENDERECO concentram Informações de Identificação Pessoal (PII). O banco de dados se pauta pelo princípio da minimização, tratando os dados exclusivamente para permitir a efetivação das entregas, vedando a extração em massa. A exclusão real não é praticada nos registros de faturamento visando a estabilidade financeira e a auditoria de acessos.</p>
+
+</main>
+</body>
+</html>
