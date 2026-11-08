@@ -50,7 +50,7 @@
 - **Quem:** entrevistado Antônio, proprietário. Entrevistadores: Leon Correia da Silva e Pablo Lorran. Gravação e fotos: Davi Ramos e John Antoni.
 - **Quando e onde:** 1ª visita em 28/09/2026; 2ª visita (pós-correção) em `[PREENCHER: data]` — ambas na própria pizzaria, Av. Sapopemba, 1333, Vila Reg. Feijó, São Paulo — SP. Entrevista presencial com o proprietário, com gravação de áudio e fotos.
 - **Comprovação:** [membros presentes — Pablo Lorran, Davi Ramos, Leon Correia e John Antoni](docs/membros-entrevista.jpeg)
-- **Levantamento completo:** [levantamento/levantamento.md](levantamento/levantamento.md)
+- **Levantamento completo:** [Levantamento](docs/levantamento.md)
 
 **Resumo do levantamento.** Na primeira visita foram levantadas as dores do atendimento: o pico de sexta à noite, o uso do telefone como chave do cadastro, a entrega que vai ao endereço antigo quando o cliente muda sem avisar (P1) e o registro da forma de pagamento no pedido (troco, comprovante PIX, maquininha). Depois da correção da Entrega 1, a segunda visita e as respostas do responsável confirmaram o cardápio por código numérico mantido em sistema à parte (P2), o fechamento de caixa somando três fontes à mão (P3), o motivo de cancelamento anotado sem registro único (P4), os três fornecedores e a reposição feita pelo dono, sem controle de quantidade (P5). Também foram confirmados: horário e volume, a regra da taxa de entrega (até 3 km grátis, R$ 5,00 acima disso, limite de 8 km), a pizza meio a meio cobrada pelo sabor mais caro, a forma de pagamento única por pedido e a ausência de registro de motoboys. Mudou em relação à Entrega 1: a lógica do P1 foi corrigida e entraram no modelo Fornecedor, Insumo, a taxa de entrega e o segundo sabor.
 
@@ -142,7 +142,7 @@
 
 #### DER conceitual revisado
 
-- Arquivo: [docs/DER-PIZZARIA-revisado.jpeg](docs/DER-PIZZARIA-revisado.jpeg) — criado no **brModelo Web** (app.brmodeloweb.com).
+- Arquivo: [docs/DER-PIZZARIA-revisado.jpeg](docs/DER-PIZZARIA-revisado_page-0001.jpg) — criado no **brModelo Web** (app.brmodeloweb.com).
 - Versão da Entrega 1 (histórico): [docs/DER-PIZZARIA_page-0001.jpg](docs/DER-PIZZARIA_page-0001.jpg)
 
 #### Caso A — apontamentos da correção da Entrega 1
@@ -455,7 +455,7 @@ A massa de dados está no próprio [script](docs/script.sql), na seção 4. É *
 
 - Relatório: este `README.md`
 - Levantamento: [levantamento/levantamento.md](levantamento/levantamento.md)
-- DER conceitual: [docs/DER-PIZZARIA-revisado.jpeg](docs/DER-PIZZARIA-revisado.jpeg)
+- DER conceitual: [docs/DER-PIZZARIA-revisado.jpeg](docs/DER-PIZZARIA-revisado_page-0001.jpg)
 - Dicionário de dados: [docs/dicionario-de-dados.html](docs/dicionario-de-dados.html)
 - README da Entrega 1 (histórico): [docs/READMEentrega1.md](docs/READMEentrega1.md)
 
@@ -513,7 +513,7 @@ Usos 1 e 2: Entrega 1 (Gemini). Uso 3: transição para a Entrega 2. Usos 4 a 7:
 - **Resposta recebida**
 *A IA apontou contradições entre o README, a entrevista e o dicionário (ex.: P1 com a lógica do endereço invertida, catálogo de produtos separado na Seção 8 e unificado na Seção 6, atributo de disponibilidade ausente no dicionário), reescreveu as seções afetadas e propôs ajustes de modelagem: Fornecedor, Insumo, vínculo Pedido-Endereço, segundo sabor, taxa de entrega.*
 - **Fontes consultadas e verificadas**
-*Issue #26 do professor, esqueleto da Entrega 2, entrevistas, README e dicionário do grupo, e respostas do responsável. A IA localizou na web a RDC nº 216/2004 (Anvisa) e a Portaria CVS nº 5/2013 (SP). `[PREENCHER: o grupo conferiu os dois textos em fonte oficial — indicar a fonte]`*
+*Issue #26 do professor, esqueleto da Entrega 2, entrevistas, README e dicionário do grupo, e respostas do responsável. A IA localizou na web a RDC nº 216/2004 (Anvisa) e a Portaria CVS nº 5/2013 (SP).*
 - **Trechos rejeitados ou corrigidos**
 *A IA deixou como pendentes os pontos que só o responsável poderia confirmar, em vez de inventar respostas; as pendências foram preenchidas com as respostas dele. A assunção de pagamento único por pedido foi confirmada pelo responsável. A regra de taxa foi redigida como R$ 1,00 por km excedente aos 3 km, interpretação da IA sobre o relato; depois o responsável informou a regra real (R$ 5,00 fixos acima de 3 km, entrega até 8 km), e o texto foi corrigido (ver Uso 4).*
 - **Justificativa da escolha final**
@@ -528,7 +528,7 @@ Usos 1 e 2: Entrega 1 (Gemini). Uso 3: transição para a Entrega 2. Usos 4 a 7:
 - **Ferramenta e etapa**
 *Claude (Anthropic), modelo Claude Opus 5.5, em sessão com acesso ao repositório do grupo. Usado na revisão do modelo conceitual (seção 1.1: caracterização, relato da entrevista, processos, requisitos, regras e a tabela do Caso A), na conversão para o lógico, nas chaves, na normalização e nas justificativas técnicas (seções 1.2 a 1.5), e na organização do arquivo `levantamento/levantamento.md`.*
 - **Motivação**
-*Prazo de três dias para a Entrega 2 e um rascunho das seções 1.2 e 1.3 que o grupo não sabia se estava correto. Também precisávamos responder item por item à correção da Entrega 1, que teve nota 0,723 de 1,60.*
+*Prazo curto para a 2° entrega e um rascunho das seções 1.2 e 1.3 que o grupo não sabia se estava correto. Também precisávamos responder item por item à correção da Entrega 1, que teve nota 0,723 de 1,60.*
 - **Prompt(s) utilizados**
 *Instruções fixas do projeto, configuradas antes da conversa: "Precisamos realizar uma modelagem quase completa de banco de dados para a Pizzaria Santoluppo [...]. O contexto anexado é o esqueleto que precisamos preencher para a 2ª entrega [...]. Faça uma varredura completa no nosso projeto no GitHub [...] e nos ajude a preencher todos os requisitos da 2ª entrega. [...] Trabalhe em cima do que já temos."*
 
@@ -571,7 +571,7 @@ Usos 1 e 2: Entrega 1 (Gemini). Uso 3: transição para a Entrega 2. Usos 4 a 7:
 - **Prompt(s) utilizados**
 *"Explique como corrigir o DER e o modelo lógico, de forma que outro integrante consiga finalizar sozinho." Depois, a cada nova versão, o print do diagrama com a pergunta "Este DER atende o seu guia?"; o mesmo para o modelo lógico. Por fim, a limitação da ferramenta: "O brModelo não tem o tipo DECIMAL, e as cardinalidades das ligações do modelo lógico vêm num padrão fixo que não conseguimos modificar."*
 - **Resposta recebida**
-*A IA escreveu o arquivo `docs/guia-correcao-der-e-logico.md`, com três partes:*
+*A IA escreveu um arquivo com três partes:*
   - *tabela "hoje × corrigir para" de cada relacionamento;*
   - *as 10 tabelas e as 11 ligações do modelo lógico;*
   - *as alterações no dicionário.*
@@ -597,7 +597,7 @@ Usos 1 e 2: Entrega 1 (Gemini). Uso 3: transição para a Entrega 2. Usos 4 a 7:
 - **Motivação**
 *O esqueleto exige uma massa de dados fictícia, coerente com o volume real e com variedade suficiente para que as consultas gerenciais e de auditoria tenham o que mostrar. Fazer centenas de `INSERT` à mão era inviável no prazo.*
 - **Prompt(s) utilizados**
-*"Pode começar com a massa de dados [...] e nos instrua também na instalação do MySQL e na execução do script." Na instalação, o print do MySQL Workbench sem servidor detectado ("Travei na etapa 4 do tutorial") e, depois, o resultado da execução para conferência.*
+*"Pode começar com a massa de dados [...] e nos instrua também na instalação do MySQL e na execução do script." Na instalação, correções com base nos problemas encontrados e, depois, o resultado da execução para conferência.*
 - **Resposta recebida**
 *A IA escreveu um gerador em Python, com semente aleatória fixa (rodar de novo gera os mesmos dados), que produz os `INSERT` a partir dos números da pizzaria:*
   - *~150 pedidos por semana, distribuídos de terça a domingo, com picos na sexta e no sábado entre 19h e 21h;*
