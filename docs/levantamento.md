@@ -7,7 +7,7 @@ Documento organizado pelo grupo a partir das duas visitas à pizzaria e das resp
 | Visita | Entrevistador(es) | Apoio | Data | Objetivo |
 | :---- | :---- | :---- | :---- | :---- |
 | 1ª — levantamento inicial | Leon Correia da Silva | Davi Ramos (gravação) e John Antoni (fotos) | 28/09/2026 | visão geral da operação e das dores do atendimento. |
-| 2ª — complementação pós-correção | Pablo Lorran | 29/10/2026 | cardápio, cancelamentos, fornecedores, estoque, caixa, expedição, dias e volume, taxa de entrega, meio a meio, horário, fornecedores, registros. |
+| 2ª — complementação pós-correção | Pablo Lorran | Etapa Solo | 29/10/2026 | cardápio, cancelamentos, fornecedores, estoque, caixa, expedição, dias e volume, taxa de entrega, meio a meio, horário, fornecedores, registros. |
 
 - **Entrevistado:** Antônio, proprietário da Pizzaria Santoluppo.
 - **Local:** Av. Sapopemba, 1333 — Vila Reg. Feijó, São Paulo — SP, CEP 03345-001.
