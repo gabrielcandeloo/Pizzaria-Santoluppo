@@ -648,4 +648,4 @@ Usos 1 e 2: Entrega 1 (Gemini). Uso 3: transição para a Entrega 2. Usos 4 a 7:
 
 ## 7. Apresentação Corporativa Final
 
-*Anexado em: [Slides Apresentação Final](docs/Pizzaria Santoluppo — Pitch Final.pptx).
+*Anexado em: [Slides Apresentação Final](docs/Pizzaria_Santoluppo—Pitch Final.pptx)
